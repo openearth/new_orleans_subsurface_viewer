@@ -14,7 +14,5 @@ const buildLegend = ({ id, layer }) => ({
 });
 
 export default [
-  buildLegend(CUSTOM_LAYERS.OPERATOR_COSTS),
-  buildLegend(CUSTOM_LAYERS.SOCIETAL_COSTS),
-  buildLegend(CUSTOM_LAYERS.PRIORITIES)
+  buildLegend(CUSTOM_LAYERS.SHALLOW_WELLS),
 ];

@@ -23,19 +23,8 @@ export const MAP_BASELAYERS = [
 export const MAP_BASELAYER_DEFAULT = MAP_BASELAYERS[0];
 
 export const CUSTOM_LAYERS = {
-  OPERATOR_COSTS: {
-    id: 'operator_costs',
-    layer: 'ra2ce:operator_costs',
-  },
-
-  SOCIETAL_COSTS: {
-    id: 'societal_losses',
-    layer: 'ra2ce:societal_costs',
-  },
-
-  PRIORITIES: {
-    id: 'priorities',
-    layer: 'ra2ce:classroads_testing',
-    style: 'ra2ce'
+  SHALLOW_WELLS: {
+    id: 'shallow_wells',
+    layer: 'new_orleans:shallow_wells',
   }
 };

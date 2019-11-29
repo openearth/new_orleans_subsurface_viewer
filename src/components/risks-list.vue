@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="pb-4">
-      Risks
+      Layers
     </h2>
     <ul class="risks-list">
       <li

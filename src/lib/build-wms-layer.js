@@ -1,8 +1,7 @@
 import buildGeoserverUrl from './build-geoserver-url';
-import wms from './mapbox/layers/wms';
-import { CUSTOM_LAYERS } from './constants';
+import wms from './wms';
 
-export const generateWmsLayer = ({ url, id, layer, style='', paint={} }) => {
+export default ({ url, id, layer, style='', paint={} }) => {
   const tile = buildGeoserverUrl({
     url,
     service: 'WMS',
@@ -20,14 +19,9 @@ export const generateWmsLayer = ({ url, id, layer, style='', paint={} }) => {
 
   return wms({
     id,
+    layer,
     tiles: [ tile ],
     tileSize: 256,
     paint
   });
 };
-
-export const shallowWells = generateWmsLayer(CUSTOM_LAYERS.SHALLOW_WELLS);
-
-// export const societalCosts = generateWmsLayer(CUSTOM_LAYERS.SOCIETAL_COSTS);
-
-// export const priorities = generateWmsLayer(CUSTOM_LAYERS.PRIORITIES);
