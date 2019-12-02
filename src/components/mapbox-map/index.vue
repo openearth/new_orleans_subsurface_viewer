@@ -16,6 +16,8 @@
         v-for="layer in layers"
         :key="layer.id"
         :options="layer"
+        :clickable="true"
+        @click="layerClick"
       />
 
     </v-mapbox>
@@ -25,7 +27,7 @@
 <script>
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { MAP_CENTER, MAP_ZOOM, MAP_BASELAYER_DEFAULT } from '@/lib/constants';
-import MapLayer from './map-layer.js';
+import MapLayer from './map-layer';
 
 import getLocalJson from '@/data/get-local-json';
 import buildGeojsonLayer from '@/lib/build-geojson-layer';
@@ -67,6 +69,10 @@ export default {
     //     zoom: this.mapConfig.zoom
     //   });
     // }
+    layerClick(e) {
+      const feature = e.features[0];
+      console.log(feature);
+    }
   },
 
   async mounted() {
@@ -76,9 +82,7 @@ export default {
       data: shallow_wells_data,
       type: 'circle'
     });
-    setTimeout(() => {
-      this.layers.push(shallow_wells_layer);
-    }, 3000);
+    this.layers.push(shallow_wells_layer);
   }
 };
 </script>

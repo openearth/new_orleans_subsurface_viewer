@@ -6,7 +6,7 @@ export const MAP_CENTER = [
   NEW_ORLEANS_CENTER_LATITUDE
 ];
 
-export const MAP_ZOOM = 8;
+export const MAP_ZOOM = 10;
 
 export const MAP_BASELAYERS = [
   'light',

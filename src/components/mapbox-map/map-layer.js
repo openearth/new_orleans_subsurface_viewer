@@ -1,85 +1,95 @@
 export default {
-  name: 'v-mapbox-layer',
+  name: 'map-layer',
   inject: ['getMap'],
   render() {
     return null;
   },
+
   props: {
     options: {
-      default: () => {
-        return {};
-      },
+      default: () => ({}),
       type: [Object, String]
     },
     // allows to place a layer before another
     before: {
       type: String,
-      required: false
+      default: null
+    },
+    clickable: {
+      type: Boolean,
+      default: false
     }
   },
-  data() {
-    return {
-      // used to determine if mounted or deferredMountedTo should be used
-      isInitialized: false
-    };
+
+  data: () => ({
+    isInitialized: false
+  }),
+
+  methods: {
+    deferredMountedTo() {
+      if(!this.isInitialized) {
+        this.renderLayer();
+        this.isInitialized = true;
+      }
+    },
+
+    addLayer() {
+      const map = this.getMap();
+      map.addLayer(this.options, this.before);
+
+      if(this.clickable) {
+        const layerId = this.options.id;
+
+        map.on('click', layerId, e => {
+          this.$emit('click', e);
+        });
+
+        map.on('mouseenter', layerId, () => {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', layerId, () => {
+          map.getCanvas().style.cursor = '';
+        });
+      }
+    },
+
+    removeLayer() {
+      const map = this.getMap();
+      if(map) {
+        const layer = map.getLayer(this.options.id);
+        if(layer) {
+          map.removeLayer(this.options.id);
+          map.removeSource(layer.source);
+        }
+      }
+    },
+
+    renderLayer() {
+      this.removeLayer();
+      this.addLayer();
+    }
   },
-  // watch props and rerender if they change
+
+  mounted() {
+    const map = this.getMap();
+    // We can immediately initialize if we have the map ready
+    if(map && map.isStyleLoaded()) {
+      this.renderLayer();
+      this.isInitialized = true;
+    }
+  },
+
+  destroyed() {
+    this.removeLayer();
+  },
+
   watch: {
     options: {
       deep: true,
       handler() {
-        this.rerender();
+        this.renderLayer();
       }
-    },
-    before() {
-      this.rerender();
-    }
-  },
-  mounted() {
-    // only execute when map is available and layer is not already initialized
-    if (this.getMap()) {
-      this.rerender();
-      this.isInitialized = true;
-    }
-  },
-  destroyed() {
-    this.removeLayer();
-  },
-  methods: {
-    deferredMountedTo() {
-      // only execute when layer is not already initialized
-      if (!this.isInitialized) {
-        this.rerender();
-        this.isInitialized = true;
-      }
-    },
-    removeLayer() {
-      const map = this.getMap();
-      if (map) {
-        const layer = map.getLayer(this.options.id);
-
-        if (layer) {
-          map.removeLayer(this.options.id);
-          try {
-            map.removeSource(layer.source);
-          } catch {
-            console.warn('could not remove source', layer.source);
-          }
-        }
-      }
-    },
-    addLayer() {
-      const map = this.getMap();
-
-      if (this.before) {
-        map.addLayer(this.options, this.before);
-      } else {
-        map.addLayer(this.options);
-      }
-    },
-    rerender() {
-      this.removeLayer();
-      this.addLayer();
     }
   }
 };
