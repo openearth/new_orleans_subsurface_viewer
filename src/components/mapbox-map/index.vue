@@ -11,7 +11,7 @@
       ref="map"
     >
 
-      <!-- Simple GeoJSON layers -->
+      <!-- Clickable GeoJSON layers -->
       <map-layer
         v-for="layer in layers"
         :key="layer.id"
@@ -72,6 +72,7 @@ export default {
     layerClick(e) {
       const feature = e.features[0];
       console.log(feature);
+      this.$store.commit('mapbox/SET_ACTIVE_FEATURE', feature);
     }
   },
 

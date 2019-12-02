@@ -16,6 +16,7 @@
 
     <v-content>
       <mapbox-map />
+      <feature-details />
     </v-content>
 
     <welcome-dialog />
@@ -25,14 +26,16 @@
 
 <script>
 import Sidebar from './sidebar';
-import WelcomeDialog from './welcome-dialog';
 import MapboxMap from '@/components/mapbox-map';
+import WelcomeDialog from './welcome-dialog';
+import FeatureDetails from '@/components/feature-details';
 
 export default {
   components: {
     Sidebar,
+    MapboxMap,
     WelcomeDialog,
-    MapboxMap
+    FeatureDetails
   }
 };
 </script>
