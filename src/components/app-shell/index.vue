@@ -5,7 +5,7 @@
     <v-app-bar
       class="app-header"
       app
-      color="indigo"
+      color="primary"
       dark
     >
       <v-toolbar-title>
@@ -15,7 +15,7 @@
     </v-app-bar>
 
     <v-content>
-      <div>Main view</div>
+      <mapbox-map />
     </v-content>
 
     <welcome-dialog />
@@ -26,11 +26,13 @@
 <script>
 import Sidebar from './sidebar';
 import WelcomeDialog from './welcome-dialog';
+import MapboxMap from '@/components/mapbox-map';
 
 export default {
   components: {
     Sidebar,
-    WelcomeDialog
+    WelcomeDialog,
+    MapboxMap
   }
 };
 </script>
