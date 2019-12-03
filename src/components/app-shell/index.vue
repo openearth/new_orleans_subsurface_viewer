@@ -16,7 +16,10 @@
 
     <v-content>
       <mapbox-map />
-      <feature-details />
+      <feature-details
+        v-if="!!activeFeature"
+        :feature="activeFeature"
+      />
     </v-content>
 
     <welcome-dialog />
@@ -36,6 +39,12 @@ export default {
     MapboxMap,
     WelcomeDialog,
     FeatureDetails
+  },
+
+  computed: {
+    activeFeature() {
+      return this.$store.getters['mapbox/activeFeature'];
+    }
   }
 };
 </script>

@@ -2,11 +2,11 @@
   <div>
     <v-sheet class="pa-5">
       <v-switch
-        v-for="feature in features"
-        :key="feature.value"
-        :label="feature.label"
-        :value="feature.value"
-        v-model="visibleFeatures"
+        v-for="layer in layers"
+        :key="layer.value"
+        :label="layer.label"
+        :value="layer.value"
+        v-model="visibleLayers"
         inset
         hide-details
       />
@@ -20,23 +20,23 @@ import buildGeojsonLayer from '@/lib/build-geojson-layer';
 
 export default {
   data: () => ({
-    features: [
+    layers: [
       {
         label: 'Shallow Wells',
         value: 'shallow_wells'
       }
     ],
-    visibleFeatures: []
+    visibleLayers: []
   }),
 
   methods: {
-    async addFeature(featureId) {
-      const layer = await this.fakeRequestToBuildLayer(featureId);
+    async addLayer(layerId) {
+      const layer = await this.fakeRequestToBuildLayer(layerId);
       this.$store.commit('mapbox/ADD_GEOJSON_LAYER', layer);
     },
 
-    removeFeature(featureId) {
-      this.$store.commit('mapbox/REMOVE_GEOJSON_LAYER', featureId);
+    removeLayer(layerId) {
+      this.$store.commit('mapbox/REMOVE_GEOJSON_LAYER', layerId);
     },
 
     async fakeRequestToBuildLayer(id) {
@@ -50,15 +50,15 @@ export default {
   },
 
   watch: {
-    visibleFeatures(newArray, oldArray) {
-      const removeFeature = newArray.length < oldArray.length;
-      if(removeFeature) {
-        const featureToRemove = arrayDiff(oldArray, newArray)[0];
-        this.removeFeature(featureToRemove);
+    visibleLayers(newArray, oldArray) {
+      const removeLayer = newArray.length < oldArray.length;
+      if(removeLayer) {
+        const layerToRemove = arrayDiff(oldArray, newArray)[0];
+        this.removeLayer(layerToRemove);
       }
       else {
-        const featureToAdd = arrayDiff(newArray, oldArray)[0];
-        this.addFeature(featureToAdd);
+        const layerToAdd = arrayDiff(newArray, oldArray)[0];
+        this.addLayer(layerToAdd);
       }
     }
   }
