@@ -13,7 +13,7 @@
 
       <!-- Clickable GeoJSON layers -->
       <map-layer
-        v-for="layer in layers"
+        v-for="layer in geoJsonLayers"
         :key="layer.id"
         :options="layer"
         :clickable="true"
@@ -28,10 +28,6 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { MAP_CENTER, MAP_ZOOM, MAP_BASELAYER_DEFAULT } from '@/lib/constants';
 import MapLayer from './map-layer';
-
-import getLocalJson from '@/data/get-local-json';
-import buildGeojsonLayer from '@/lib/build-geojson-layer';
-
 
 export default {
   components: {
@@ -52,6 +48,9 @@ export default {
         zoom: MAP_ZOOM,
         style: MAP_BASELAYER_DEFAULT.style
       };
+    },
+    geoJsonLayers() {
+      return this.$store.getters['mapbox/geoJsonLayers'];
     }
   },
 
@@ -71,19 +70,8 @@ export default {
     // }
     layerClick(e) {
       const feature = e.features[0];
-      console.log(feature);
       this.$store.commit('mapbox/SET_ACTIVE_FEATURE', feature);
     }
-  },
-
-  async mounted() {
-    const shallow_wells_data = await getLocalJson('shallow_wells.json');
-    const shallow_wells_layer = buildGeojsonLayer({
-      id: 'shallow_wells',
-      data: shallow_wells_data,
-      type: 'circle'
-    });
-    this.layers.push(shallow_wells_layer);
   }
 };
 </script>

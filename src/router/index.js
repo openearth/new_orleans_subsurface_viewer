@@ -1,15 +1,22 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Home from '../views/Home.vue';
+// import Home from '@/views/Home';
+import Geology from '@/views/Geology';
 
 Vue.use(VueRouter);
 
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   component: Home
+  // },
   {
     path: '/',
-    name: 'home',
-    component: Home
+    // path: '/geology',
+    name: 'geology',
+    component: Geology
   }
 ];
 
