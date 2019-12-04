@@ -119,8 +119,8 @@ export default {
 
   .feature-details__iframe {
     border: 0;
-    width: 250px;
-    height: 500px;
+    width: 258px;
+    height: 508px;
   }
 
   .feature-details__documents {

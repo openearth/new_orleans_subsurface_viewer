@@ -25,7 +25,7 @@
         <v-btn
           class="primary"
           text
-          @click="showWelcomeDialog = false"
+          @click="onStartClick"
         >
           Let's get started
         </v-btn>
@@ -35,10 +35,28 @@
 </template>
 
 <script>
+const LOCALSTORAGE_KEY = 'intro_seen';
+
 export default {
   data: () => ({
     showWelcomeDialog: true
-  })
+  }),
+
+  beforeMount() {
+    const seen = window.localStorage.getItem(LOCALSTORAGE_KEY);
+
+    if(seen) {
+      this.showWelcomeDialog = false;
+    }
+  },
+
+  methods: {
+    onStartClick() {
+      this.showWelcomeDialog = false;
+
+      window.localStorage.setItem(LOCALSTORAGE_KEY, true);
+    }
+  }
 };
 </script>
 

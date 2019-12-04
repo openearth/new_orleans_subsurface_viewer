@@ -27,6 +27,10 @@ export default {
     },
     SET_ACTIVE_FEATURE(state, feature) {
       state.activeFeature = feature;
+    },
+    RESET_ALL(state) {
+      state.geoJsonLayers = [];
+      state.activeFeature = null;
     }
   },
 
