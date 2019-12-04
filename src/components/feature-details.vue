@@ -56,8 +56,9 @@
 </template>
 
 <script>
-import getLocalXml from '@/data/get-local-xml';
-import { path, partition, compose } from 'ramda';
+// import getLocalXml from '@/data/get-local-xml';
+import featureDetailsRepo from '@/repo/featureDetailsRepo';
+// import { path, partition, compose } from 'ramda';
 
 export default {
   props: {
@@ -80,32 +81,36 @@ export default {
 
   async created() {
     try {
-      const response = await getLocalXml('/FAKE_DATA/shallow_well_feature.xml');
-      const PLOT_FILE_ID = 'plot_file';
-
-      // Ramda helpers 🐏
-      const getDetailUrl = path(['wps:Data', 'wps:ComplexData', '_cdata']);
-      const splitPlotUrlFromLinks = partition(obj => path(['ows:Identifier', '_text'], obj) === PLOT_FILE_ID);
-      const formatLink = feature => ({
-          name: compose(
-            str => str.replace('_', ' '),
-            path(['ows:Identifier', '_text'])
-          )(feature),
-          url: getDetailUrl(feature)
-      });
-      const buildLinks = compose(
-        arr => ({ plotUrl: arr[0][0], links: arr[1].map(formatLink) }),
-        splitPlotUrlFromLinks,
-        path(['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
-      );
-
-      const { plotUrl, links } = buildLinks(response);
-      this.featurePlotUrl = plotUrl;
-      this.featureDetails = links;
+      const res = await featureDetailsRepo.getReport(12);
+      console.log(res);
     }
     catch(err) {
       console.log('Error getting feature XML: ', err);
     }
+    // try {
+    //   const response = await getLocalXml('/FAKE_DATA/shallow_well_feature.xml');
+    //   const PLOT_FILE_ID = 'plot_file';
+
+    //   // Ramda helpers 🐏
+    //   const getDetailUrl = path(['wps:Data', 'wps:ComplexData', '_cdata']);
+    //   const splitPlotUrlFromLinks = partition(obj => path(['ows:Identifier', '_text'], obj) === PLOT_FILE_ID);
+    //   const formatLink = feature => ({
+    //       name: compose(
+    //         str => str.replace('_', ' '),
+    //         path(['ows:Identifier', '_text'])
+    //       )(feature),
+    //       url: getDetailUrl(feature)
+    //   });
+    //   const buildLinks = compose(
+    //     arr => ({ plotUrl: arr[0][0], links: arr[1].map(formatLink) }),
+    //     splitPlotUrlFromLinks,
+    //     path(['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
+    //   );
+
+    //   const { plotUrl, links } = buildLinks(response);
+    //   this.featurePlotUrl = plotUrl;
+    //   this.featureDetails = links;
+    // }
   }
 };
 </script>
