@@ -40,7 +40,7 @@ export default {
   },
 
   methods: {
-    clickFn(e) {
+    clickFn_draw(e) {
       const map = this.$root.map;
       const features = map.queryRenderedFeatures(e.point, { layers: [POINTS_LAYER_ID] });
 
@@ -74,7 +74,7 @@ export default {
         this.geojson.features.push(point);
       }
 
-      // Build the line
+      // Build the line @TODO :: build on the fly when dragging a point
       if(this.geojson.features.length > 1) {
         this.linestring.geometry.coordinates = this.geojson.features.map(point =>
           point.geometry.coordinates
@@ -87,16 +87,49 @@ export default {
 
       // If we reach the maximum amount of points, stop drawing
       if(this.hasFullyDrawnLine) {
-        this.cleanListeners();
+        this.cleanListeners_draw();
         this.isDrawing = false;
+        this.initAdjustLine();
       }
     },
 
-    mouseMoveFn(e) {
+    mouseMoveFn_draw(e) {
       const map = this.$root.map;
       const features = map.queryRenderedFeatures(e.point, { layers: [POINTS_LAYER_ID] });
       // UI indicator for clicking/hovering a point on the map
       map.getCanvas().style.cursor = features.length ? 'pointer' : 'crosshair';
+    },
+
+    mouseDragFn_adjust(e) {
+      console.log('drag');
+      const map = this.$root.map;
+      const coords = e.lngLat;
+
+      // Set a UI indicator for dragging.
+      map.getCanvas().style.cursor = 'grabbing';
+
+      // Update the Point feature in `geojson` coordinates
+      // and call setData to the source layer `point` on it.
+      this.geojson.features[0].geometry.coordinates = [ coords.lng, coords.lat ]; // @TODO :: Get the correct point
+      map.getSource(SOURCE_NAME).setData(this.geojson);
+    },
+
+    mouseUpFn_adjust() {
+      console.log('up');
+      const map = this.$root.map;
+
+      map.getCanvas().style.cursor = '';
+      map.off('mousemove', this.mouseDragFn_adjust);
+    },
+
+    mouseEnterFn_adjust() {
+      const map = this.$root.map;
+      map.getCanvas().style.cursor = 'pointer';
+    },
+
+    mouseLeaveFn_adjust() {
+      const map = this.$root.map;
+      map.getCanvas().style.cursor = '';
     },
 
     toggleDrawLine() {
@@ -106,26 +139,10 @@ export default {
       }
     },
 
-    cleanListeners() {
-      console.log('cleanListeners');
-      const map = this.$root.map;
-      map.off('click', this.clickFn);
-      map.off('mousemove', this.mouseMoveFn);
-      map.getCanvas().style.cursor = '';
-    },
-
-    removeDrawing() {
-      this.geojson.features = [];
-      this.linestring.geometry.coordinates = [];
-
-      const map = this.$root.map;
-      if(map.getLayer(POINTS_LAYER_ID)) map.removeLayer(POINTS_LAYER_ID);
-      if(map.getLayer(LINES_LAYER_ID)) map.removeLayer(LINES_LAYER_ID);
-      if(map.getSource(SOURCE_NAME)) map.removeSource(SOURCE_NAME);
-    },
-
     initDrawLine() {
       const map = this.$root.map;
+
+      this.cleanListeners_adjust();
       this.removeDrawing();
 
       map.addSource(SOURCE_NAME, {
@@ -159,13 +176,49 @@ export default {
         filter: ['in', '$type', 'LineString']
       });
 
-      map.on('click', this.clickFn);
-      map.on('mousemove', this.mouseMoveFn);
-    }
+      map.on('click', this.clickFn_draw);
+      map.on('mousemove', this.mouseMoveFn_draw);
+    },
+
+    initAdjustLine() {
+      const map = this.$root.map;
+      map.on('mouseenter', POINTS_LAYER_ID, this.mouseEnterFn_adjust);
+      map.on('mouseleave', POINTS_LAYER_ID, this.mouseLeaveFn_adjust);
+      map.on('mousedown', POINTS_LAYER_ID, e => { // @TODO :: write an off
+        e.preventDefault();
+        map.getCanvas().style.cursor = 'grab';
+        map.on('mousemove', this.mouseDragFn_adjust);
+        map.once('mouseup', this.mouseUpFn_adjust);
+      });
+    },
+
+    cleanListeners_draw() {
+      const map = this.$root.map;
+      map.off('click', this.clickFn_draw);
+      map.off('mousemove', this.mouseMoveFn_draw);
+      map.getCanvas().style.cursor = '';
+    },
+
+    cleanListeners_adjust() {
+      const map = this.$root.map;
+      map.off('mouseenter', POINTS_LAYER_ID, this.mouseEnterFn_adjust);
+      map.off('mouseleave', POINTS_LAYER_ID, this.mouseLeaveFn_adjust);
+    },
+
+    removeDrawing() {
+      this.geojson.features = [];
+      this.linestring.geometry.coordinates = [];
+
+      const map = this.$root.map;
+      if(map.getLayer(POINTS_LAYER_ID)) map.removeLayer(POINTS_LAYER_ID);
+      if(map.getLayer(LINES_LAYER_ID)) map.removeLayer(LINES_LAYER_ID);
+      if(map.getSource(SOURCE_NAME)) map.removeSource(SOURCE_NAME);
+    },
   },
 
   destroyed() {
-    this.cleanListeners();
+    this.cleanListeners_draw();
+    this.cleanListeners_adjust();
     this.removeDrawing();
   }
 };
