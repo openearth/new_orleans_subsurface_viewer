@@ -30,7 +30,8 @@ export default {
         'coordinates': []
       }
     },
-    isDrawing: false
+    isDrawing: false,
+    pointToDragId: null
   }),
 
   computed: {
@@ -40,6 +41,13 @@ export default {
   },
 
   methods: {
+    buildLine() {
+      this.linestring.geometry.coordinates = this.geojson.features
+        .map(point => point.geometry.coordinates);
+
+      this.geojson.features.push(this.linestring);
+    },
+
     clickFn_draw(e) {
       const map = this.$root.map;
       const features = map.queryRenderedFeatures(e.point, { layers: [POINTS_LAYER_ID] });
@@ -74,13 +82,9 @@ export default {
         this.geojson.features.push(point);
       }
 
-      // Build the line @TODO :: build on the fly when dragging a point
+      // Build the line
       if(this.geojson.features.length > 1) {
-        this.linestring.geometry.coordinates = this.geojson.features.map(point =>
-          point.geometry.coordinates
-        );
-
-        this.geojson.features.push(this.linestring);
+        this.buildLine();
       }
 
       map.getSource(SOURCE_NAME).setData(this.geojson);
@@ -101,25 +105,44 @@ export default {
     },
 
     mouseDragFn_adjust(e) {
-      console.log('drag');
       const map = this.$root.map;
       const coords = e.lngLat;
 
       // Set a UI indicator for dragging.
       map.getCanvas().style.cursor = 'grabbing';
 
-      // Update the Point feature in `geojson` coordinates
-      // and call setData to the source layer `point` on it.
-      this.geojson.features[0].geometry.coordinates = [ coords.lng, coords.lat ]; // @TODO :: Get the correct point
+      // Remove line from stored features
+      this.geojson.features.pop();
+
+      // Update the point feature in `geojson` coordinates
+      this.geojson.features
+        .find(feature => feature.properties.id === this.pointToDragId)
+        .geometry.coordinates = [ coords.lng, coords.lat ]
+      ;
+
+      // Build the line
+      this.buildLine();
+
+      // Re-draw the features on the map
       map.getSource(SOURCE_NAME).setData(this.geojson);
     },
 
+    mouseDownFn_adjust(e) {
+        e.preventDefault();
+        const map = this.$root.map;
+        map.getCanvas().style.cursor = 'grab';
+
+        this.pointToDragId = e.features[0].properties.id;
+        map.on('mousemove', this.mouseDragFn_adjust);
+        map.once('mouseup', this.mouseUpFn_adjust);
+    },
+
     mouseUpFn_adjust() {
-      console.log('up');
       const map = this.$root.map;
 
       map.getCanvas().style.cursor = '';
       map.off('mousemove', this.mouseDragFn_adjust);
+      this.pointToDragId = null;
     },
 
     mouseEnterFn_adjust() {
@@ -155,7 +178,7 @@ export default {
         type: 'circle',
         source: SOURCE_NAME,
         paint: {
-          'circle-radius': 5,
+          'circle-radius': 6,
           'circle-color': DELTARES_BLUE
         },
         filter: ['in', '$type', 'Point']
@@ -184,12 +207,7 @@ export default {
       const map = this.$root.map;
       map.on('mouseenter', POINTS_LAYER_ID, this.mouseEnterFn_adjust);
       map.on('mouseleave', POINTS_LAYER_ID, this.mouseLeaveFn_adjust);
-      map.on('mousedown', POINTS_LAYER_ID, e => { // @TODO :: write an off
-        e.preventDefault();
-        map.getCanvas().style.cursor = 'grab';
-        map.on('mousemove', this.mouseDragFn_adjust);
-        map.once('mouseup', this.mouseUpFn_adjust);
-      });
+      map.on('mousedown', POINTS_LAYER_ID, this.mouseDownFn_adjust);
     },
 
     cleanListeners_draw() {
@@ -203,6 +221,7 @@ export default {
       const map = this.$root.map;
       map.off('mouseenter', POINTS_LAYER_ID, this.mouseEnterFn_adjust);
       map.off('mouseleave', POINTS_LAYER_ID, this.mouseLeaveFn_adjust);
+      map.off('mousedown', POINTS_LAYER_ID, this.mouseDownFn_adjust);
     },
 
     removeDrawing() {
