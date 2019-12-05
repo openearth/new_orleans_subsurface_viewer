@@ -11,7 +11,28 @@
       <v-toolbar-title>
         NO2SV
       </v-toolbar-title>
-      <v-spacer/>
+      <v-tabs
+        background-color="primary"
+        dark
+        right
+        style="width: auto;"
+      >
+        <v-tab :to="{ name: 'geology' }">
+          Geology
+        </v-tab>
+        <v-tab :to="{ name: 'model' }">
+          Model
+        </v-tab>
+        <v-tab :to="{ name: 'data' }">
+          Data
+        </v-tab>
+        <v-tab :to="{ name: 'monitoring' }">
+          Monitoring
+        </v-tab>
+        <v-tab :to="{ name: 'subsidence' }">
+          Subsidence
+        </v-tab>
+      </v-tabs>
     </v-app-bar>
 
     <v-content>
