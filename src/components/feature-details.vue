@@ -38,7 +38,7 @@
           <v-list-item
             v-for="(item, i) in featureDetails"
             :key="i"
-            :href="item.url"
+            :href="`https://${ item.url }`"
             target="_blank"
             color="primary"
           >

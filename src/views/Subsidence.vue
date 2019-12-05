@@ -1,6 +1,6 @@
 <template>
   <div>
-    Subsidence
+    Subsidence coming soon
   </div>
 </template>
 

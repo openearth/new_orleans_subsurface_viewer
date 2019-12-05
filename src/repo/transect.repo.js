@@ -16,6 +16,12 @@ const transectRepo = {
       data: demoTemplate,
       headers: {'Content-Type': 'application/xml'}
     });
+
+    // .then(({ data }) => {
+    //   return typeof data === 'object'
+    //     ? data
+    //     : JSON.parse(data);
+    // });
   },
 
   getTransectQs(lineCoordinates) {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    Monitoring
+    Monitoring coming soon
   </div>
 </template>
 
