@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import featureDetailsRepo from '@/repo/featureDetailsRepo';
+import featureDetailsRepo from '@/repo/feature-details.repo';
 import { partition } from 'ramda';
 const PLOT_FILE_ID = 'plot_file';
 

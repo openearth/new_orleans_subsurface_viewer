@@ -6,11 +6,19 @@
     >
       {{ hasFullyDrawnLine ? 'Re-d' : 'D' }}raw line
     </v-btn>
+    <v-btn
+      @click="getSection"
+
+    >
+      Get section
+    </v-btn>
     <pre>{{ linestring }}</pre>
   </div>
 </template>
 
 <script>
+import transectRepo from '@/repo/transect.repo';
+
 const DELTARES_BLUE = '#008fc5';
 const SOURCE_NAME = 'draw-geojson';
 const POINTS_LAYER_ID = 'draw-points';
@@ -41,6 +49,17 @@ export default {
   },
 
   methods: {
+    async getSection() {
+      console.log('Getting section');
+
+      try {
+        await transectRepo.getTransect(this.linestring.geometry.coordinates);
+      }
+      catch(err) {
+        console.log('Error getting transect: ', err);
+      }
+    },
+
     buildLine() {
       this.linestring.geometry.coordinates = this.geojson.features
         .map(point => point.geometry.coordinates);
