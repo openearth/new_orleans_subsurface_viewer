@@ -3,6 +3,7 @@
     class="feature-details"
     min-width="320"
     max-height="800"
+    v-if="hasData"
   >
     <v-toolbar dense flat>
       <v-toolbar-title>
@@ -21,7 +22,7 @@
 
       <!-- Plot -->
       <iframe
-        v-if="!!featurePlotUrl"
+        v-if="!!featurePlotLink"
         class="feature-details__iframe"
         src="FAKE_DATA/plot_1575300895.767069.html"
       />
@@ -51,14 +52,16 @@
         </v-list-item-group>
       </v-list>
 
+      <!-- <pre>{{ featurePlotLink }}</pre> -->
+
     </v-container>
   </v-card>
 </template>
 
 <script>
-// import getLocalXml from '@/data/get-local-xml';
 import featureDetailsRepo from '@/repo/featureDetailsRepo';
-// import { path, partition, compose } from 'ramda';
+import { partition } from 'ramda';
+const PLOT_FILE_ID = 'plot_file';
 
 export default {
   props: {
@@ -69,48 +72,42 @@ export default {
   },
 
   data: () => ({
-    featurePlotUrl: null,
-    featureDetails: []
+    featurePlotLink: null,
+    featureDetails: [],
+    hasData: false
   }),
 
   methods: {
     closeFeature() {
       this.$store.commit('mapbox/SET_ACTIVE_FEATURE', null);
+    },
+
+    async fetchDetails() {
+      console.log('fetching');
+      const { uid } = this.feature.properties;
+      try {
+        const detailList = await featureDetailsRepo.getReport(uid);
+
+        // We need to split off the plot to display it in an iFrame
+        const [ plotLinks, otherLinks ] = partition(({ id }) => id === PLOT_FILE_ID, detailList);
+        this.featurePlotLink = plotLinks[0];
+        this.featureDetails = otherLinks;
+        this.hasData = true;
+      }
+      catch(err) {
+        console.log('Error getting feature XML: ', err);
+      }
     }
   },
 
-  async created() {
-    try {
-      const res = await featureDetailsRepo.getReport(12);
-      console.log(res);
-    }
-    catch(err) {
-      console.log('Error getting feature XML: ', err);
-    }
-    // try {
-    //   const response = await getLocalXml('/FAKE_DATA/shallow_well_feature.xml');
-    //   const PLOT_FILE_ID = 'plot_file';
+  created() {
+    this.fetchDetails();
+  },
 
-    //   // Ramda helpers 🐏
-    //   const getDetailUrl = path(['wps:Data', 'wps:ComplexData', '_cdata']);
-    //   const splitPlotUrlFromLinks = partition(obj => path(['ows:Identifier', '_text'], obj) === PLOT_FILE_ID);
-    //   const formatLink = feature => ({
-    //       name: compose(
-    //         str => str.replace('_', ' '),
-    //         path(['ows:Identifier', '_text'])
-    //       )(feature),
-    //       url: getDetailUrl(feature)
-    //   });
-    //   const buildLinks = compose(
-    //     arr => ({ plotUrl: arr[0][0], links: arr[1].map(formatLink) }),
-    //     splitPlotUrlFromLinks,
-    //     path(['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
-    //   );
-
-    //   const { plotUrl, links } = buildLinks(response);
-    //   this.featurePlotUrl = plotUrl;
-    //   this.featureDetails = links;
-    // }
+  watch: {
+    feature() {
+      this.fetchDetails();
+    }
   }
 };
 </script>

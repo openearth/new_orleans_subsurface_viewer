@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const baseURL = 'http://tl-ng050.xtr.deltares.nl/wps';
+const baseURL = `${ process.env.VUE_APP_SERVER_BASE_URL }/wps`;
 const baseRepo = axios.create({
-    baseURL
+  baseURL
 });
 
 export default baseRepo;
