@@ -28,21 +28,21 @@ export default {
     layers: [
       {
         id: 'shallow_wells',
-        identifier: 'borehole_data'
+        wpsIdentifier: 'borehole_data'
       },
       {
         id: 'cross_sections',
-        identifier: 'lines_data'
+        wpsIdentifier: 'lines_data'
       }
     ],
     visibleLayers: []
   }),
 
   methods: {
-    async addLayer({ id, identifier }) {
+    async addLayer({ id, wpsIdentifier }) {
       const layer = await this.fakeRequestToBuildLayer(id);
       this.$store.commit('mapbox/ADD_GEOJSON_LAYER', {
-        identifier,
+        wpsIdentifier,
         ...layer
       });
     },

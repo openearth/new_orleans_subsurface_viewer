@@ -17,10 +17,6 @@ const featureDetailsRepo = {
         }
     })
     .then(({ data }) => convert.xml2js(data, { compact: true, spaces: 2}))
-    .then(data => {
-      console.log(data);
-      return data;
-    })
     .then(data => formatDataIntoLinks(data))
     ;
   }
@@ -41,6 +37,7 @@ function formatDataIntoLinks(data) {
 
   const buildLinks = compose(
     map(formatLink),
+    val => Array.isArray(val) ? val : [val],
     pathOr([], ['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
   );
 

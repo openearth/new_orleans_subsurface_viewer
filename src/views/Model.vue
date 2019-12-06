@@ -62,7 +62,7 @@ export default {
         await transectRepo.getTransect(this.linestring.geometry.coordinates);
       }
       catch(err) {
-        console.log('Error getting transect: ', err);
+        console.error('Error getting transect: ', err);
       }
     },
 

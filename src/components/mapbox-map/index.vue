@@ -78,11 +78,11 @@ export default {
     //     zoom: this.mapConfig.zoom
     //   });
     // }
-    layerClick({ event, layer}) {
+    layerClick({ event, layer }) {
       const feature = event.features[0];
       this.$store.commit('mapbox/SET_ACTIVE_FEATURE', {
-        identifier: layer.identifier,
-        ...feature
+        wpsIdentifier: layer.wpsIdentifier,
+        uid: feature.properties.uid
       });
     }
   }
