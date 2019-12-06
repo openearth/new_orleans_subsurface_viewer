@@ -1,6 +1,14 @@
 <template>
   <div>
-    Monitoring
+    <v-card-title>
+      Monitoring
+    </v-card-title>
+    <v-subheader>
+      Coming soon
+    </v-subheader>
+    <v-sheet class="pa-5">
+
+    </v-sheet>
   </div>
 </template>
 

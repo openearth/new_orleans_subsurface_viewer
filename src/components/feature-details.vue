@@ -20,18 +20,21 @@
 
     <v-container class="d-flex">
 
-      <!-- Plot -->
+      <!-- Plot
+        use src="FAKE_DATA/plot_1575300895.767069.html" to test
+      -->
       <iframe
         v-if="!!featurePlotLink"
         class="feature-details__iframe"
-        src="FAKE_DATA/plot_1575300895.767069.html"
+        :src="featurePlotLink.url"
       />
+      <p v-else>No plot available</p>
 
       <!-- Details -->
       <v-list
         v-if="featureDetails.length"
         rounded
-        class="ml-3 feature-details__documents"
+        class="ml-3"
       >
         <v-subheader>Documents</v-subheader>
         <v-list-item-group color="primary">
@@ -51,15 +54,14 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-
-      <!-- <pre>{{ featurePlotLink }}</pre> -->
+      <p v-else class="ml-3">No documents available</p>
 
     </v-container>
   </v-card>
 </template>
 
 <script>
-import featureDetailsRepo from '@/repo/featureDetailsRepo';
+import featureDetailsRepo from '@/repo/feature-details.repo';
 import { partition } from 'ramda';
 const PLOT_FILE_ID = 'plot_file';
 
@@ -83,7 +85,6 @@ export default {
     },
 
     async fetchDetails() {
-      console.log('fetching');
       const { uid } = this.feature.properties;
       try {
         const detailList = await featureDetailsRepo.getReport(uid);
@@ -123,9 +124,5 @@ export default {
     border: 0;
     width: 258px;
     height: 508px;
-  }
-
-  .feature-details__documents {
-    text-transform: capitalize;
   }
 </style>
