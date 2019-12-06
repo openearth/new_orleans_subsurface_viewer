@@ -27,16 +27,24 @@ export default {
   data: () => ({
     layers: [
       {
-        id: 'shallow_wells'
+        id: 'shallow_wells',
+        identifier: 'borehole_data'
+      },
+      {
+        id: 'cross_sections',
+        identifier: 'lines_data'
       }
     ],
     visibleLayers: []
   }),
 
   methods: {
-    async addLayer({ id }) {
+    async addLayer({ id, identifier }) {
       const layer = await this.fakeRequestToBuildLayer(id);
-      this.$store.commit('mapbox/ADD_GEOJSON_LAYER', layer);
+      this.$store.commit('mapbox/ADD_GEOJSON_LAYER', {
+        identifier,
+        ...layer
+      });
     },
 
     removeLayer(layerId) {

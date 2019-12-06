@@ -46,7 +46,7 @@ export default {
     },
 
     clickFn(e) {
-      this.$emit('click', e);
+      this.$emit('click', { event: e, layer: this.options });
     },
 
     mouseEnterFn() {

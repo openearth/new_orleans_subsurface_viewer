@@ -57,6 +57,7 @@
       <p v-else class="ml-3">No documents available</p>
 
     </v-container>
+    <pre>{{ feature }}</pre>
   </v-card>
 </template>
 
@@ -85,9 +86,13 @@ export default {
     },
 
     async fetchDetails() {
+
+      // identifier=lines_data&version=1.0.0&datainputs=input_id=10
+      // identifier=borehole_data&version=1.0.0&datainputs=input_id%3D5
       const { uid } = this.feature.properties;
+      const { identifier } = this.feature;
       try {
-        const detailList = await featureDetailsRepo.getReport(uid);
+        const detailList = await featureDetailsRepo.getReport(identifier, uid);
 
         // We need to split off the plot to display it in an iFrame
         const [ plotLinks, otherLinks ] = partition(({ id }) => id === PLOT_FILE_ID, detailList);

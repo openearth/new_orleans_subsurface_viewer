@@ -78,9 +78,12 @@ export default {
     //     zoom: this.mapConfig.zoom
     //   });
     // }
-    layerClick(e) {
-      const feature = e.features[0];
-      this.$store.commit('mapbox/SET_ACTIVE_FEATURE', feature);
+    layerClick({ event, layer}) {
+      const feature = event.features[0];
+      this.$store.commit('mapbox/SET_ACTIVE_FEATURE', {
+        identifier: layer.identifier,
+        ...feature
+      });
     }
   }
 };
