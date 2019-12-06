@@ -20,12 +20,15 @@
 
     <v-container class="d-flex">
 
-      <!-- Plot -->
+      <!-- Plot
+        use src="FAKE_DATA/plot_1575300895.767069.html" to test
+      -->
       <iframe
         v-if="!!featurePlotLink"
         class="feature-details__iframe"
-        src="FAKE_DATA/plot_1575300895.767069.html"
+        :src="featurePlotLink.url"
       />
+      <p v-else>No plot available</p>
 
       <!-- Details -->
       <v-list
@@ -51,8 +54,7 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-
-      <!-- <pre>{{ featurePlotLink }}</pre> -->
+      <p v-else class="ml-3">No documents available</p>
 
     </v-container>
   </v-card>
@@ -83,7 +85,6 @@ export default {
     },
 
     async fetchDetails() {
-      console.log('fetching');
       const { uid } = this.feature.properties;
       try {
         const detailList = await featureDetailsRepo.getReport(uid);

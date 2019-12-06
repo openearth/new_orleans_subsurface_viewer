@@ -3,7 +3,6 @@ import buildGeoserverUrl from './build-geoserver-url';
 const defaultUrl = process.env.VUE_APP_GEOSERVER_BASE_URL;
 
 export default ({ url=defaultUrl, id, layer, style='', paint={}, tileSize=256 }) => {
-  console.log(id);
   const tile = buildGeoserverUrl({
     url,
     service: 'WMS',

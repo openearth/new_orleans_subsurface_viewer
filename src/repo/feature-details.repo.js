@@ -1,5 +1,5 @@
 import convert from 'xml-js';
-import { map, path, compose } from 'ramda';
+import { map, path, pathOr, compose } from 'ramda';
 import formatIdToLabel from '@/lib/format-id-to-label';
 import baseRepo from './_base';
 
@@ -37,7 +37,7 @@ function formatDataIntoLinks(data) {
 
   const buildLinks = compose(
     map(formatLink),
-    path(['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
+    pathOr([], ['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
   );
 
   return buildLinks(data);
