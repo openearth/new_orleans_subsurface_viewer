@@ -1,11 +1,14 @@
 <template>
   <div>
+    <v-card-title>
+      Monitoring
+    </v-card-title>
     <v-sheet class="pa-5">
       <v-switch
         v-for="layer in layers"
-        :key="layer.value"
-        :label="layer.label"
-        :value="layer.value"
+        :key="layer.id"
+        :label="formatIdToLabel(layer.id)"
+        :value="layer.id"
         v-model="visibleLayers"
         inset
         hide-details
@@ -17,21 +20,22 @@
 <script>
 import getLocalJson from '@/data/get-local-json';
 import buildGeojsonLayer from '@/lib/build-geojson-layer';
+import arrayDiff from '@/lib/get-arrays-difference';
+import formatIdToLabel from '@/lib/format-id-to-label';
 
 export default {
   data: () => ({
     layers: [
       {
-        label: 'Shallow Wells',
-        value: 'shallow_wells'
+        id: 'shallow_wells'
       }
     ],
     visibleLayers: []
   }),
 
   methods: {
-    async addLayer(layerId) {
-      const layer = await this.fakeRequestToBuildLayer(layerId);
+    async addLayer({ id }) {
+      const layer = await this.fakeRequestToBuildLayer(id);
       this.$store.commit('mapbox/ADD_GEOJSON_LAYER', layer);
     },
 
@@ -46,25 +50,26 @@ export default {
         data,
         type: 'circle'
       });
+    },
+
+    formatIdToLabel(id) {
+      return formatIdToLabel(id);
     }
   },
 
   watch: {
     visibleLayers(newArray, oldArray) {
-      const removeLayer = newArray.length < oldArray.length;
-      if(removeLayer) {
-        const layerToRemove = arrayDiff(oldArray, newArray)[0];
-        this.removeLayer(layerToRemove);
+      const removeLayerId = newArray.length < oldArray.length;
+      if(removeLayerId) {
+        const layerToRemoveId = arrayDiff(oldArray, newArray)[0];
+        this.removeLayer(layerToRemoveId);
       }
       else {
-        const layerToAdd = arrayDiff(newArray, oldArray)[0];
+        const layerToAddId = arrayDiff(newArray, oldArray)[0];
+        const layerToAdd = this.layers.find(({ id }) => id === layerToAddId);
         this.addLayer(layerToAdd);
       }
     }
   }
 };
-
-function arrayDiff(arrayA, arrayB) {
-  return arrayA.filter(x => !arrayB.includes(x));
-}
 </script>

@@ -1,5 +1,6 @@
 import convert from 'xml-js';
 import { map, path, compose } from 'ramda';
+import formatIdToLabel from '@/lib/format-id-to-label';
 import baseRepo from './_base';
 
 const featureDetailsRepo = {
@@ -29,7 +30,7 @@ function formatDataIntoLinks(data) {
     const url = path(['wps:Data', 'wps:ComplexData', '_cdata'], feature);
     return {
       id,
-      name: id.replace('_', ' '),
+      name: formatIdToLabel(id),
       url
     };
   };

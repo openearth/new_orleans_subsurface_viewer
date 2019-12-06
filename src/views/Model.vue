@@ -1,18 +1,24 @@
 <template>
-  <div class="pa-2">
-    <v-btn
-      @click="toggleDrawLine"
-      :disabled="isDrawing"
-    >
-      {{ hasFullyDrawnLine ? 'Re-d' : 'D' }}raw line
-    </v-btn>
-    <v-btn
-      @click="getSection"
-
-    >
-      Get section
-    </v-btn>
-    <pre>{{ linestring }}</pre>
+  <div>
+    <v-card-title>
+      Model
+    </v-card-title>
+    <v-sheet class="pa-5">
+      <v-btn
+        @click="toggleDrawLine"
+        :disabled="isDrawing"
+        class="mr-4"
+      >
+        {{ hasFullyDrawnLine ? 'Re-d' : 'D' }}raw line
+      </v-btn>
+      <v-btn
+        @click="getSection"
+        :disabled="!hasFullyDrawnLine"
+      >
+        Get section
+      </v-btn>
+      <pre>{{ linestring }}</pre>
+    </v-sheet>
   </div>
 </template>
 

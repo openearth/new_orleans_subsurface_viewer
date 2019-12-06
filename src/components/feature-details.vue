@@ -31,14 +31,14 @@
       <v-list
         v-if="featureDetails.length"
         rounded
-        class="ml-3 feature-details__documents"
+        class="ml-3"
       >
         <v-subheader>Documents</v-subheader>
         <v-list-item-group color="primary">
           <v-list-item
             v-for="(item, i) in featureDetails"
             :key="i"
-            :href="`https://${ item.url }`"
+            :href="item.url"
             target="_blank"
             color="primary"
           >
@@ -123,9 +123,5 @@ export default {
     border: 0;
     width: 258px;
     height: 508px;
-  }
-
-  .feature-details__documents {
-    text-transform: capitalize;
   }
 </style>

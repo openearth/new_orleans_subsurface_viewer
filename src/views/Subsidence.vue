@@ -1,7 +1,15 @@
 <template>
-  <div>
-    Subsidence coming soon
-  </div>
+<div>
+  <v-card-title>
+    Subsidence
+  </v-card-title>
+  <v-subheader>
+    Coming soon
+  </v-subheader>
+  <v-sheet class="pa-5">
+
+  </v-sheet>
+</div>
 </template>
 
 <script>

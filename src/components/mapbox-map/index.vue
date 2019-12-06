@@ -20,6 +20,13 @@
         @click="layerClick"
       />
 
+      <!-- Raster layers -->
+      <map-layer
+        v-for="layer in rasterLayers"
+        :key="layer.id"
+        :options="layer"
+      />
+
     </v-mapbox>
   </div>
 </template>
@@ -51,6 +58,9 @@ export default {
     },
     geoJsonLayers() {
       return this.$store.getters['mapbox/geoJsonLayers'];
+    },
+    rasterLayers() {
+      return this.$store.getters['mapbox/rasterLayers'];
     }
   },
 
