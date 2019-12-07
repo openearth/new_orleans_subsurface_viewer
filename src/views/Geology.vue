@@ -28,6 +28,9 @@ export default {
     layers: [
       {
         id: 'shallow_wells'
+      },
+      {
+        id: 'cross_sections'
       }
     ],
     visibleLayers: []

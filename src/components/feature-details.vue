@@ -3,11 +3,10 @@
     class="feature-details"
     min-width="320"
     max-height="800"
-    v-if="hasData"
   >
     <v-toolbar dense flat>
       <v-toolbar-title>
-        {{ feature.properties.uid }}
+        {{ feature.uid }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
@@ -18,52 +17,79 @@
       </v-btn>
     </v-toolbar>
 
-    <v-container class="d-flex">
+    <v-container>
 
-      <!-- Plot
-        use src="FAKE_DATA/plot_1575300895.767069.html" to test
-      -->
-      <iframe
-        v-if="!!featurePlotLink"
-        class="feature-details__iframe"
-        :src="featurePlotLink.url"
-      />
-      <p v-else>No plot available</p>
-
-      <!-- Details -->
-      <v-list
+      <div
         v-if="featureDetails.length"
-        rounded
-        class="ml-3"
+        class="d-flex"
       >
-        <v-subheader>Documents</v-subheader>
-        <v-list-item-group color="primary">
-          <v-list-item
-            v-for="(item, i) in featureDetails"
-            :key="i"
-            :href="item.url"
-            target="_blank"
-            color="primary"
+
+        <!-- HTML Plots -->
+        <template v-if="htmlPlots.length">
+          <div
+            v-for="plot in htmlPlots"
+            :key="plot.url"
+            class="feature-details__column"
           >
-            <v-list-item-icon>
-              <v-icon>mdi-file-document</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.name" />
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-      <p v-else class="ml-3">No documents available</p>
+            <iframe
+              class="feature-details__iframe"
+              :src="plot.url"
+            />
+          </div>
+        </template>
+
+        <!-- Images -->
+        <template v-if="images.length">
+          <div
+            v-for="img in images"
+            :key="img.url"
+            class="feature-details__column"
+          >
+            <img :src="img.url" :alt="img.name" />
+          </div>
+        </template>
+
+        <!-- Downloadable documents -->
+        <div
+          v-if="hasLoaded && textDocuments.length"
+          class="feature-details__column"
+        >
+          <v-list rounded>
+            <v-subheader>Documents</v-subheader>
+            <v-list-item-group color="primary">
+              <v-list-item
+                v-for="(item, i) in textDocuments"
+                :key="i"
+                :href="item.url"
+                target="_blank"
+                color="primary"
+              >
+                <v-list-item-icon>
+                  <v-icon>mdi-file-document</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.name" />
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
+
+      </div>
+      <p v-else-if="!hasLoaded">Loading feature data...</p>
+      <p v-else>No data available for this feature</p>
 
     </v-container>
+    <!-- <div style="font-size: 12px;">
+      <pre>{{ featureDetails }}</pre>
+      <pre>{{ images }}</pre>
+    </div> -->
   </v-card>
 </template>
 
 <script>
+import { compose, split, last, equals, trim } from 'ramda';
 import featureDetailsRepo from '@/repo/feature-details.repo';
-import { partition } from 'ramda';
-const PLOT_FILE_ID = 'plot_file';
 
 export default {
   props: {
@@ -74,10 +100,27 @@ export default {
   },
 
   data: () => ({
-    featurePlotLink: null,
     featureDetails: [],
-    hasData: false
+    hasLoaded: false,
+    wpsDictionary: {
+      'shallow_wells': 'borehole_data',
+      'cross_sections': 'lines_data'
+    }
   }),
+
+  computed: {
+    htmlPlots() {
+      return this.featureDetails.filter(({ url }) => hasExtension('html')(url));
+      // For testing :: return [ { url: 'FAKE_DATA/plot_1575300895.767069.html' } ];
+    },
+    images() {
+      return this.featureDetails.filter(({url}) => hasExtension('png')(url));
+      // For testing :: return [ { url: 'https://cataas.com/cat/says/Oh%20hi%20Lilia!' } ];
+    },
+    textDocuments() {
+      return this.featureDetails.filter(({ url }) => hasExtension('pdf')(url));
+    }
+  },
 
   methods: {
     closeFeature() {
@@ -85,18 +128,15 @@ export default {
     },
 
     async fetchDetails() {
-      const { uid } = this.feature.properties;
-      try {
-        const detailList = await featureDetailsRepo.getReport(uid);
+      const { uid, layerId } = this.feature;
+      const wpsIdentifier = this.wpsDictionary[layerId];
 
-        // We need to split off the plot to display it in an iFrame
-        const [ plotLinks, otherLinks ] = partition(({ id }) => id === PLOT_FILE_ID, detailList);
-        this.featurePlotLink = plotLinks[0];
-        this.featureDetails = otherLinks;
-        this.hasData = true;
+      try {
+        this.featureDetails = await featureDetailsRepo.getReport(wpsIdentifier, uid);
+        this.hasLoaded = true;
       }
       catch(err) {
-        console.log('Error getting feature XML: ', err);
+        console.error('Error getting feature XML: ', err);
       }
     }
   },
@@ -111,6 +151,14 @@ export default {
     }
   }
 };
+
+const hasExtension = extension =>
+  compose(
+    equals(extension), // @REFACTOR :: do regexps
+    trim,
+    last,
+    split('.')
+  );
 </script>
 
 <style>
@@ -120,7 +168,16 @@ export default {
     left: .5rem;
   }
 
+  .feature-details__column img {
+    display: block;
+  }
+
+  .feature-details__column:not(:last-child) {
+    margin-right: 12px;
+  }
+
   .feature-details__iframe {
+    display: block;
     border: 0;
     width: 258px;
     height: 508px;

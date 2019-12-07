@@ -41,10 +41,6 @@ export default {
     MapLayer
   },
 
-  data: () => ({
-    layers: []
-  }),
-
   computed: {
     mapBoxToken() {
       return process.env.VUE_APP_MAPBOX_TOKEN;
@@ -80,7 +76,12 @@ export default {
     // }
     layerClick(e) {
       const feature = e.features[0];
-      this.$store.commit('mapbox/SET_ACTIVE_FEATURE', feature);
+      const layerId = feature.layer.id;
+      const { uid } = feature.properties;
+      this.$store.commit('mapbox/SET_ACTIVE_FEATURE', {
+        layerId,
+        uid
+      });
     }
   }
 };

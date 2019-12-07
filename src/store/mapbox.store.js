@@ -18,9 +18,9 @@ export default {
       const layerExists = state.geoJsonLayers.some(storedLayer => storedLayer.id === newLayer.id);
       if(!layerExists) {
         state.geoJsonLayers = [
-          ...state.geoJsonLayers, {
+          ...state.geoJsonLayers, Object.freeze({
             ...newLayer
-          }
+          })
         ];
       }
     },
@@ -31,9 +31,9 @@ export default {
       const layerExists = state.rasterLayers.some(storedLayer => storedLayer.id === newLayer.id);
       if(!layerExists) {
         state.rasterLayers = [
-          ...state.rasterLayers, {
+          ...state.rasterLayers, Object.freeze({
             ...newLayer
-          }
+          })
         ];
       }
     },
@@ -41,7 +41,7 @@ export default {
       state.rasterLayers = state.rasterLayers.filter(layer => layer.id !== id);
     },
     SET_ACTIVE_FEATURE(state, feature) {
-      state.activeFeature = feature;
+      state.activeFeature = Object.freeze(feature);
     },
     RESET_ALL(state) {
       state.geoJsonLayers = [];
