@@ -41,10 +41,6 @@ export default {
     MapLayer
   },
 
-  data: () => ({
-    layers: []
-  }),
-
   computed: {
     mapBoxToken() {
       return process.env.VUE_APP_MAPBOX_TOKEN;
@@ -78,11 +74,12 @@ export default {
     //     zoom: this.mapConfig.zoom
     //   });
     // }
-    layerClick({ event, layer }) {
-      const feature = event.features[0];
+    layerClick(e) {
+      const { wpsIdentifier } = e.targetLayer;
+      const { uid } = e.features[0].properties;
       this.$store.commit('mapbox/SET_ACTIVE_FEATURE', {
-        wpsIdentifier: layer.wpsIdentifier,
-        uid: feature.properties.uid
+        wpsIdentifier,
+        uid
       });
     }
   }

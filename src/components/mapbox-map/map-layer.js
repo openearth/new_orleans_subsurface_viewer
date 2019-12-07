@@ -46,7 +46,8 @@ export default {
     },
 
     clickFn(e) {
-      this.$emit('click', { event: e, layer: this.options });
+      // Tack on the layer
+      this.$emit('click', { ...e, targetLayer: { ...this.options } });
     },
 
     mouseEnterFn() {
