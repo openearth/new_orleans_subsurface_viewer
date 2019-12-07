@@ -75,10 +75,11 @@ export default {
     //   });
     // }
     layerClick(e) {
-      const { wpsIdentifier } = e.targetLayer;
-      const { uid } = e.features[0].properties;
+      const feature = e.features[0];
+      const layerId = feature.layer.id;
+      const { uid } = feature.properties;
       this.$store.commit('mapbox/SET_ACTIVE_FEATURE', {
-        wpsIdentifier,
+        layerId,
         uid
       });
     }

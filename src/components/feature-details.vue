@@ -101,7 +101,11 @@ export default {
 
   data: () => ({
     featureDetails: [],
-    hasLoaded: false
+    hasLoaded: false,
+    wpsDictionary: {
+      'shallow_wells': 'borehole_data',
+      'cross_sections': 'lines_data'
+    }
   }),
 
   computed: {
@@ -124,7 +128,9 @@ export default {
     },
 
     async fetchDetails() {
-      const { uid, wpsIdentifier } = this.feature;
+      const { uid, layerId } = this.feature;
+      const wpsIdentifier = this.wpsDictionary[layerId];
+
       try {
         this.featureDetails = await featureDetailsRepo.getReport(wpsIdentifier, uid);
         this.hasLoaded = true;

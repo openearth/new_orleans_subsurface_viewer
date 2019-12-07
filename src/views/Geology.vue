@@ -27,24 +27,19 @@ export default {
   data: () => ({
     layers: [
       {
-        id: 'shallow_wells',
-        wpsIdentifier: 'borehole_data'
+        id: 'shallow_wells'
       },
       {
-        id: 'cross_sections',
-        wpsIdentifier: 'lines_data'
+        id: 'cross_sections'
       }
     ],
     visibleLayers: []
   }),
 
   methods: {
-    async addLayer({ id, wpsIdentifier }) {
+    async addLayer({ id }) {
       const layer = await this.fakeRequestToBuildLayer(id);
-      this.$store.commit('mapbox/ADD_GEOJSON_LAYER', {
-        wpsIdentifier,
-        ...layer
-      });
+      this.$store.commit('mapbox/ADD_GEOJSON_LAYER', layer);
     },
 
     removeLayer(layerId) {
