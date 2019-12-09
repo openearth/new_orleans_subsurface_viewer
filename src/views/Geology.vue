@@ -23,22 +23,42 @@ import buildGeojsonLayer from '@/lib/build-geojson-layer';
 import arrayDiff from '@/lib/get-arrays-difference';
 import formatIdToLabel from '@/lib/format-id-to-label';
 
+const CIRCLE_STYLE = {
+  layout: {},
+  paint: {
+    'circle-radius': 5,
+    'circle-color': '#008fc5',
+  }
+};
+const LINE_STYLE = {
+  layout: {
+    'line-join': 'round',
+    'line-cap': 'round'
+  },
+  paint: {
+    'line-color': '#008fc5',
+    'line-width': 5
+  }
+};
+
 export default {
   data: () => ({
     layers: [
       {
-        id: 'shallow_wells'
+        id: 'shallow_wells',
+        type: 'circle'
       },
       {
-        id: 'cross_sections'
+        id: 'cross_sections',
+        type: 'line'
       }
     ],
     visibleLayers: []
   }),
 
   methods: {
-    async addLayer({ id }) {
-      const layer = await this.fakeRequestToBuildLayer(id);
+    async addLayer({ id, type }) {
+      const layer = await this.fakeRequestToBuildLayer(id, type);
       this.$store.commit('mapbox/ADD_GEOJSON_LAYER', layer);
     },
 
@@ -46,12 +66,15 @@ export default {
       this.$store.commit('mapbox/REMOVE_GEOJSON_LAYER', layerId);
     },
 
-    async fakeRequestToBuildLayer(id) {
+    async fakeRequestToBuildLayer(id, type) {
       const data = await getLocalJson(`${ id }.json`);
+      const { layout, paint } = type === 'circle' ? CIRCLE_STYLE : LINE_STYLE;
       return buildGeojsonLayer({
         id,
         data,
-        type: 'circle'
+        type,
+        layout,
+        paint
       });
     },
 

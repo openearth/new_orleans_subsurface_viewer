@@ -8,6 +8,6 @@ export default function buildGeojsonLayer({ id, data, type, paint={}, layout={} 
       data
     },
     layout,
-    paint,
+    paint
   };
 }
