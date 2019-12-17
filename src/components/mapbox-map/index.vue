@@ -11,6 +11,14 @@
       ref="map"
     >
 
+          <!-- Map Controls -->
+      <v-mapbox-geocoder />
+      <v-mapbox-navigation-control position="bottom-right" />
+      <map-control-baselayer
+        :layers="mapBaseLayers"
+        position="bottom-right"
+      />
+
       <!-- Clickable GeoJSON layers -->
       <map-layer
         v-for="layer in geoJsonLayers"
@@ -33,12 +41,17 @@
 
 <script>
 import 'mapbox-gl/dist/mapbox-gl.css';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { MAP_CENTER, MAP_ZOOM, MAP_BASELAYER_DEFAULT } from '@/lib/constants';
 import MapLayer from './map-layer';
+import MapControlBaselayer from './map-control-baselayer';
+// import MapControlFitbounds from './map-control-fitbounds';
 
 export default {
   components: {
-    MapLayer
+    MapLayer,
+    MapControlBaselayer,
+    // MapControlFitbounds,
   },
 
   data: () => ({
@@ -71,13 +84,13 @@ export default {
         this.$root.mapLoaded = true;
       });
     },
-    // fitToBounds() {
-    //   // @REFACTOR :: We do a simple flyto at the moment, we could also fit to actual bounds of layers
-    //   this.$root.map.flyTo({
-    //     center: this.mapConfig.center,
-    //     zoom: this.mapConfig.zoom
-    //   });
-    // }
+    fitToBounds() {
+      // @REFACTOR :: We do a simple flyto at the moment, we could also fit to actual bounds of layers
+      this.$root.map.flyTo({
+        center: this.mapConfig.center,
+        zoom: this.mapConfig.zoom
+      });
+    },
     layerClick(e) {
       const feature = e.features[0];
       this.$store.commit('mapbox/SET_ACTIVE_FEATURE', feature);
