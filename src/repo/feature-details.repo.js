@@ -5,13 +5,13 @@ import baseRepo from './_base';
 
 const featureDetailsRepo = {
 
-  getReport(uid) {
+  getReport(identifier, uid) {
     return baseRepo({
         method: 'get',
         params: {
           request: 'execute',
           service: 'WPS',
-          identifier: 'borehole_data',
+          identifier,
           version: '1.0.0',
           datainputs: `input_id=${ uid }`
         }
@@ -37,6 +37,7 @@ function formatDataIntoLinks(data) {
 
   const buildLinks = compose(
     map(formatLink),
+    val => Array.isArray(val) ? val : [val],
     pathOr([], ['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
   );
 
