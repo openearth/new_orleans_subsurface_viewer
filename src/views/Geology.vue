@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card-title>
-      Monitoring
+      Geology
     </v-card-title>
     <v-sheet class="pa-5">
       <v-switch
