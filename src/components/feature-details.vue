@@ -1,7 +1,7 @@
 <template>
   <v-card
     class="feature-details"
-    min-width="320"
+    min-width="400"
     max-height="800"
   >
     <v-toolbar dense flat>
@@ -104,7 +104,7 @@ export default {
     hasLoaded: false,
     wpsDictionary: {
       'shallow_wells': 'borehole_data',
-      'cross_sections': 'lines_data'
+      'cross_sections': 'lines_data',
     }
   }),
 
@@ -179,7 +179,7 @@ const hasExtension = extension =>
   .feature-details__iframe {
     display: block;
     border: 0;
-    width: 258px;
-    height: 508px;
+    width: 280;
+    height: 530px;
   }
 </style>
