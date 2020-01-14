@@ -11,7 +11,7 @@ const transectRepo = {
       transect: lineCoordinates
     });
 
-    // console.log(template);
+    console.log("Getting section..");
 
     return baseRepo({
       method: 'post',
