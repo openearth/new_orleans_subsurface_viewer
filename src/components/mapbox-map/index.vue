@@ -42,7 +42,7 @@
 <script>
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import { MAP_CENTER, MAP_ZOOM, MAP_BASELAYER_DEFAULT } from '@/lib/constants';
+import { MAP_CENTER, MAP_ZOOM, MAP_BASELAYER_DEFAULT, MAP_BASELAYERS} from '@/lib/constants';
 import MapLayer from './map-layer';
 import MapControlBaselayer from './map-control-baselayer';
 // import MapControlFitbounds from './map-control-fitbounds';
@@ -65,6 +65,10 @@ export default {
         style: MAP_BASELAYER_DEFAULT.style
       };
     },
+    mapBaseLayers() {
+      return MAP_BASELAYERS;
+    },
+
     geoJsonLayers() {
       return this.$store.getters['mapbox/geoJsonLayers'];
     },
