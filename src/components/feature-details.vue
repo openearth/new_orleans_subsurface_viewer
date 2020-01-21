@@ -103,7 +103,7 @@ export default {
     featureDetails: [],
     hasLoaded: false,
     wpsDictionary: {
-      'shallow_wells': 'borehole_data',
+      'boreholes': 'borehole_data',
       'cross_sections': 'lines_data',
     }
   }),

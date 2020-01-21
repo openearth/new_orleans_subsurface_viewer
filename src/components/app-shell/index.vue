@@ -21,10 +21,10 @@
           Geology
         </v-tab>
         <v-tab :to="{ name: 'model' }">
-          Model
+          Geo-Model
         </v-tab>
         <v-tab :to="{ name: 'data' }">
-          Data
+          Data & Maps
         </v-tab>
         <v-tab :to="{ name: 'monitoring' }">
           Monitoring
@@ -40,6 +40,10 @@
       <feature-details
         v-if="!!activeFeature"
         :feature="activeFeature"
+      />
+      <transect-popup
+        v-if="seen"
+        :feature="section"
       />
     </v-content>
 
@@ -59,12 +63,15 @@ export default {
     Sidebar,
     MapboxMap,
     WelcomeDialog,
-    FeatureDetails
+    FeatureDetails,
   },
 
   computed: {
     activeFeature() {
       return this.$store.getters['mapbox/activeFeature'];
+    },
+    section() {
+      return this.$store.getters['mapbox/section'];
     }
   }
 };

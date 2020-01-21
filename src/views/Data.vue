@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card-title>
-      Data
+      Data & Maps
     </v-card-title>
     <v-sheet class="pa-5">
       <v-switch

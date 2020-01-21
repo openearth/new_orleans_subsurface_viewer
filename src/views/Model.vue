@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card-title>
-      Model
+      Geo-Model
     </v-card-title>
     <v-sheet class="pa-5">
       <v-btn
@@ -33,6 +33,7 @@ const MAX_POINTS = 2;
 
 export default {
   data: () => ({
+    seen:true,
     geojson: {
       'type': 'FeatureCollection',
       'features': []
@@ -60,6 +61,7 @@ export default {
 
       try {
         await transectRepo.getTransect(this.linestring.geometry.coordinates);
+        // console.log(transectRepo)
       }
       catch(err) {
         console.error('Error getting transect: ', err);

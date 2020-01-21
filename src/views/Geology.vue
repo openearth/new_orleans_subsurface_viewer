@@ -45,7 +45,7 @@ export default {
   data: () => ({
     layers: [
       {
-        id: 'shallow_wells',
+        id: 'boreholes',
         type: 'circle'
       },
       {

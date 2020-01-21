@@ -4,13 +4,15 @@ export default {
   state: {
     geoJsonLayers: [],
     rasterLayers: [],
-    activeFeature: null
+    activeFeature: null,
+    section: null
   },
 
   getters: {
     geoJsonLayers: state => state.geoJsonLayers,
     rasterLayers: state => state.rasterLayers,
-    activeFeature: state => state.activeFeature
+    activeFeature: state => state.activeFeature,
+    section: state => state.section,
   },
 
   mutations: {
@@ -43,10 +45,14 @@ export default {
     SET_ACTIVE_FEATURE(state, feature) {
       state.activeFeature = Object.freeze(feature);
     },
+    SET_GET_SECTION(state, section) {
+      state.section = Object.freeze(section);
+    },
     RESET_ALL(state) {
       state.geoJsonLayers = [];
       state.rasterLayers = [];
       state.activeFeature = null;
+      state.section = null;
     }
   },
 

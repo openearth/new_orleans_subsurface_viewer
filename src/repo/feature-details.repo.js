@@ -40,6 +40,7 @@ function formatDataIntoLinks(data) {
     val => Array.isArray(val) ? val : [val],
     pathOr([], ['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
   );
+  // console.log("nnn",buildLinks(data));
   return buildLinks(data);
 }
 
