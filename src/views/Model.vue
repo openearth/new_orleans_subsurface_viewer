@@ -3,6 +3,9 @@
     <v-card-title>
       Geo-Model
     </v-card-title>
+    <v-card-text>
+      This function provides information about the subsurface based on the drawn transect.
+    </v-card-text>
     <v-sheet class="pa-5">
       <v-btn
         @click="toggleDrawLine"
@@ -17,9 +20,12 @@
       >
         Get section
       </v-btn>
-      <pre>{{ linestring }}</pre>
+      <!-- <pre>{{ linestring }}</pre> -->
     </v-sheet>
+      <div>
   </div>
+  </div>
+
 </template>
 
 <script>
@@ -33,7 +39,6 @@ const MAX_POINTS = 2;
 
 export default {
   data: () => ({
-    seen:true,
     geojson: {
       'type': 'FeatureCollection',
       'features': []
@@ -46,7 +51,8 @@ export default {
       }
     },
     isDrawing: false,
-    pointToDragId: null
+    pointToDragId: null,
+    wpsResponse: [],
   }),
 
   computed: {
@@ -57,11 +63,10 @@ export default {
 
   methods: {
     async getSection() {
-      console.log('Getting section');
-
+      console.log('WPS request');
       try {
-        await transectRepo.getTransect(this.linestring.geometry.coordinates);
-        // console.log(transectRepo)
+        this.wpsResponse  = await transectRepo.getTransect(this.linestring.geometry.coordinates);
+        this.$store.commit("mapbox/SET_REQUEST_DATA",this.wpsResponse);
       }
       catch(err) {
         console.error('Error getting transect: ', err);
@@ -266,6 +271,7 @@ export default {
     this.cleanListeners_draw();
     this.cleanListeners_adjust();
     this.removeDrawing();
-  }
+  },
 };
+
 </script>

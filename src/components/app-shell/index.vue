@@ -41,9 +41,9 @@
         v-if="!!activeFeature"
         :feature="activeFeature"
       />
-      <transect-popup
-        v-if="seen"
-        :feature="section"
+      <wpsResponse
+        v-if="!!requestData"
+        :feature="showPopup"
       />
     </v-content>
 
@@ -57,6 +57,7 @@ import Sidebar from './sidebar';
 import MapboxMap from '@/components/mapbox-map';
 import WelcomeDialog from './welcome-dialog';
 import FeatureDetails from '@/components/feature-details';
+import wpsResponse from '@/components/transect-popup';
 
 export default {
   components: {
@@ -64,14 +65,18 @@ export default {
     MapboxMap,
     WelcomeDialog,
     FeatureDetails,
+    wpsResponse
   },
 
   computed: {
     activeFeature() {
       return this.$store.getters['mapbox/activeFeature'];
     },
-    section() {
-      return this.$store.getters['mapbox/section'];
+    requestData() {
+      return this.$store.getters['mapbox/requestData'];
+    },
+    showPopup() {
+      return this.$store.getters['mapbox/showPopup'];
     }
   }
 };

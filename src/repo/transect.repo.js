@@ -1,9 +1,9 @@
-import convert from 'xml-js';
+// import convert from 'xml-js';
 import baseRepo from './_base';
 import { map, path, pathOr, compose } from 'ramda';
-import formatIdToLabel from '@/lib/format-id-to-label';
+// import formatIdToLabel from '@/lib/format-id-to-label';
 import { xmlRequestTemplate } from './_xml-template';
-import store from '../store/mapbox.store';
+// import store from '../store/mapbox.store';
 
 const transectRepo = {
 
@@ -14,8 +14,6 @@ const transectRepo = {
       functionId: 'transect',
       transect: lineCoordinates
     });
-
-    // console.log("Getting section..");
 
     return baseRepo({
       method: 'post',
@@ -33,7 +31,6 @@ const transectRepo = {
 function formatDataIntoLinks(data) {
   // 🐏
 
-  console.log("input data into formatDataIntoLinks is ", data);
   const formatLink = feature => {
   const url = path([],feature);
     return {
@@ -47,8 +44,6 @@ function formatDataIntoLinks(data) {
     val => Array.isArray(val) ? val : [val],
     pathOr([], ['data'])
   );
-
-    // console.log("lala",buildLinks(data));
   return buildLinks(data);
 }
 

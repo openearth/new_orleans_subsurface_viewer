@@ -133,6 +133,7 @@ export default {
 
       try {
         this.featureDetails = await featureDetailsRepo.getReport(wpsIdentifier, uid);
+        // console.log(this.featureDetails)
         this.hasLoaded = true;
       }
       catch(err) {

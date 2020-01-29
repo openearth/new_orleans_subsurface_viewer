@@ -5,14 +5,16 @@ export default {
     geoJsonLayers: [],
     rasterLayers: [],
     activeFeature: null,
-    section: null
+    requestData:null,
+    showPopup: null,
   },
 
   getters: {
     geoJsonLayers: state => state.geoJsonLayers,
     rasterLayers: state => state.rasterLayers,
     activeFeature: state => state.activeFeature,
-    section: state => state.section,
+    requestData: state => state.requestData,
+    showPopup: state => state.showPopup
   },
 
   mutations: {
@@ -44,10 +46,18 @@ export default {
     },
     SET_ACTIVE_FEATURE(state, feature) {
       state.activeFeature = Object.freeze(feature);
+
     },
-    SET_GET_SECTION(state, section) {
-      state.section = Object.freeze(section);
+    //change this state once we receive the html response from the backend
+    SET_SHOW_POPUP(state, showPopup) {
+      state.showPopup =  Object.freeze(showPopup);
+      // state.showPopup = showPopup;
     },
+    //change this state when Get Section button is pressed from GeoModel tab
+    SET_REQUEST_DATA(state, requestData) {
+      state.requestData = requestData;
+    },
+
     RESET_ALL(state) {
       state.geoJsonLayers = [];
       state.rasterLayers = [];
