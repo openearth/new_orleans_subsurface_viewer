@@ -6,7 +6,6 @@ export default {
     rasterLayers: [],
     activeFeature: null,
     requestData:null,
-    showPopup: null,
   },
 
   getters: {
@@ -14,7 +13,6 @@ export default {
     rasterLayers: state => state.rasterLayers,
     activeFeature: state => state.activeFeature,
     requestData: state => state.requestData,
-    showPopup: state => state.showPopup
   },
 
   mutations: {
@@ -47,11 +45,6 @@ export default {
     SET_ACTIVE_FEATURE(state, feature) {
       state.activeFeature = Object.freeze(feature);
 
-    },
-    //change this state once we receive the html response from the backend
-    SET_SHOW_POPUP(state, showPopup) {
-      state.showPopup =  Object.freeze(showPopup);
-      // state.showPopup = showPopup;
     },
     //change this state when Get Section button is pressed from GeoModel tab
     SET_REQUEST_DATA(state, requestData) {

@@ -41,9 +41,9 @@
         v-if="!!activeFeature"
         :feature="activeFeature"
       />
-      <wpsResponse
+      <requestData
         v-if="!!requestData"
-        :feature="showPopup"
+        :feature="requestData"
       />
     </v-content>
 
@@ -57,7 +57,7 @@ import Sidebar from './sidebar';
 import MapboxMap from '@/components/mapbox-map';
 import WelcomeDialog from './welcome-dialog';
 import FeatureDetails from '@/components/feature-details';
-import wpsResponse from '@/components/transect-popup';
+import requestData from '@/components/transect-popup';
 
 export default {
   components: {
@@ -65,7 +65,8 @@ export default {
     MapboxMap,
     WelcomeDialog,
     FeatureDetails,
-    wpsResponse
+    requestData
+
   },
 
   computed: {
@@ -75,9 +76,6 @@ export default {
     requestData() {
       return this.$store.getters['mapbox/requestData'];
     },
-    showPopup() {
-      return this.$store.getters['mapbox/showPopup'];
-    }
   }
 };
 </script>

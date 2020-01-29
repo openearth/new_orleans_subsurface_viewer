@@ -1,6 +1,6 @@
 <template>
    <v-card
-    class="wpsResponse"
+    class="requestData"
     min-width="600"
     max-height="800"
   >
@@ -20,7 +20,7 @@
     <v-container>
 
       <div
-        v-if="wpsResponse.length"
+        v-if="requestData.length"
         class="d-flex"
       >
 
@@ -29,10 +29,10 @@
           <div
             v-for="plot in htmlPlots"
             :key="plot.url"
-            class="wpsResponse__column"
+            class="requestData__column"
           >
             <iframe
-              class="wpsResponse__iframe"
+              class="requestData__iframe"
               :src="plot.url"
             />
           </div>
@@ -53,12 +53,11 @@ export default {
 
   data:() => ({
     hasLoaded:false,
-    wpsResponse: [],
   }),
 
   computed: {
     htmlPlots(){
-      return this.wpsResponse.filter(({url}) => hasExtension ('html')(url));
+      return this.requestData.filter(({url}) => hasExtension ('html')(url));
     },
 
     requestData () {
@@ -68,17 +67,14 @@ export default {
 
   methods:{
     closeFeature() {
-      this.$store.commit('mapbox/SET_SHOW_POPUP', null);
       this.$store.commit('mapbox/SET_REQUEST_DATA', null);
     },
 
     async getSection() {
       try {
-        this.wpsResponse  = this.$store.getters['mapbox/requestData'];
         this.hasLoaded = true;
-        this.$store.commit("mapbox/SET_SHOW_POPUP",this.wpsResponse);
-      }
-      catch(err) {
+
+      }      catch(err) {
         console.error('Error getting transect: ', err);
       }
     },
@@ -99,21 +95,21 @@ compose(
 
 </script>
 <style>
-  .wpsResponse{
+  .requestData{
     position: absolute;
     bottom: 2rem;
     left: .5rem;
   }
 
-  .wpsResponse__column img {
+  .requestData__column img {
     display: block;
   }
 
-  .wpsResponse__column:not(:last-child) {
+  .requestData__column:not(:last-child) {
     margin-right: 12px;
   }
 
-  .wpsResponse__iframe {
+  .requestData__iframe {
     display: block;
     border: 0;
     width: 600px;
