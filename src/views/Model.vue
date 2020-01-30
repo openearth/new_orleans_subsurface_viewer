@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import transectRepo from '@/repo/transect.repo';
+// import transectRepo from '@/repo/transect.repo';
 
 const DELTARES_BLUE = '#008fc5';
 const SOURCE_NAME = 'draw-geojson';
@@ -65,8 +65,9 @@ export default {
     async getSection() {
       console.log('WPS request');
       try {
-        this.wpsResponse  = await transectRepo.getTransect(this.linestring.geometry.coordinates);
-        this.$store.commit("mapbox/SET_REQUEST_DATA",this.wpsResponse);
+        // this.wpsResponse  = await transectRepo.getTransect(this.linestring.geometry.coordinates);
+        // this.$store.commit("mapbox/SET_REQUEST_DATA",this.wpsResponse);
+        this.$store.commit("mapbox/SET_REQUEST_DATA",this.linestring.geometry.coordinates);
       }
       catch(err) {
         console.error('Error getting transect: ', err);

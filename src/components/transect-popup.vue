@@ -1,6 +1,6 @@
 <template>
    <v-card
-    class="requestData"
+    class="wpsResponse"
     min-width="600"
     max-height="800"
   >
@@ -20,7 +20,7 @@
     <v-container>
 
       <div
-        v-if="requestData.length"
+        v-if="wpsResponse.length"
         class="d-flex"
       >
 
@@ -29,18 +29,18 @@
           <div
             v-for="plot in htmlPlots"
             :key="plot.url"
-            class="requestData__column"
+            class="wpsResponse__column"
           >
             <iframe
-              class="requestData__iframe"
+              class="wpsResponse__iframe"
               :src="plot.url"
             />
           </div>
         </template>
 
       </div>
-      <p v-else-if="!hasLoaded">Loading feature data...</p>
-      <p v-else>No data available for this feature</p>
+      <p v-else-if="!this.htmlPlots">No data available for this feature.  </p>
+      <p v-else>Loading feature data... <img src="@/assets/img/loading.gif" ></p>
 
     </v-container>
   </v-card>
@@ -48,16 +48,18 @@
 
 <script>
 import { compose, split, last, equals, trim } from 'ramda';
+import transectRepo from '@/repo/transect.repo';
 
 export default {
 
   data:() => ({
     hasLoaded:false,
+    wpsResponse: [],
   }),
 
   computed: {
     htmlPlots(){
-      return this.requestData.filter(({url}) => hasExtension ('html')(url));
+      return this.wpsResponse.filter(({url}) => hasExtension ('html')(url));
     },
 
     requestData () {
@@ -72,9 +74,11 @@ export default {
 
     async getSection() {
       try {
+        this.wpsResponse  = await transectRepo.getTransect(this.requestData);
+        console.log("wpsResponse", this.htmlPlots)
         this.hasLoaded = true;
-
-      }      catch(err) {
+      }
+      catch(err) {
         console.error('Error getting transect: ', err);
       }
     },
@@ -95,21 +99,21 @@ compose(
 
 </script>
 <style>
-  .requestData{
+  .wpsResponse{
     position: absolute;
     bottom: 2rem;
     left: .5rem;
   }
 
-  .requestData__column img {
+  .wpsResponse__column img {
     display: block;
   }
 
-  .requestData__column:not(:last-child) {
+  .wpsResponse__column:not(:last-child) {
     margin-right: 12px;
   }
 
-  .requestData__iframe {
+  .wpsResponse__iframe {
     display: block;
     border: 0;
     width: 600px;
