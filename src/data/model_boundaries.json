@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "model_boundaries",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "location": "D:\\new_orleans_viewer\\neworleans\\data\\model\\merged.tif" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ -90.139926111071446, 30.118496118336051 ], [ -89.828634573055055, 30.115309886341048 ], [ -89.832033349015163, 29.889787747265391 ], [ -90.142621864052799, 29.892966892195265 ], [ -90.139926111071446, 30.118496118336051 ] ] ] ] } }
+]
+}

@@ -2,7 +2,6 @@
   <v-card
     class="feature-details"
     min-width="400"
-    max-height="800"
   >
     <v-toolbar dense flat>
       <v-toolbar-title>
@@ -171,6 +170,8 @@ const hasExtension = extension =>
 
   .feature-details__column img {
     display: block;
+    max-width: 600px;
+    max-height: 500px;
   }
 
   .feature-details__column:not(:last-child) {
@@ -180,7 +181,8 @@ const hasExtension = extension =>
   .feature-details__iframe {
     display: block;
     border: 0;
-    width: 280;
+    width: 280px;
     height: 530px;
+
   }
 </style>

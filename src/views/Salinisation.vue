@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card-title>
-      Model
+      Salinisation
     </v-card-title>
     <v-subheader>
       Coming soon

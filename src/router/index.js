@@ -3,17 +3,22 @@ import VueRouter from 'vue-router';
 import store from '@/store';
 
 import Geology from '@/views/Geology';
-import Model from '@/views/Model';
+import Subsurface from '@/views/Subsurface';
 import Data from '@/views/Data';
 import Monitoring from '@/views/Monitoring';
 import Subsidence from '@/views/Subsidence';
+import Salinisation from '@/views/Salinisation';
+import GreenInfra from '@/views/Green';
+import Model from '@/views/Model';
+import Intro from '@/views/Intro';
+
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    redirect: '/geology'
+    redirect: '/intro'
   },
   {
     path: '/geology',
@@ -21,9 +26,9 @@ const routes = [
     component: Geology
   },
   {
-    path: '/model',
-    name: 'model',
-    component: Model
+    path: '/subsurface',
+    name: 'subsurface',
+    component: Subsurface
   },
   {
     path: '/data',
@@ -39,6 +44,26 @@ const routes = [
     path: '/subsidence',
     name: 'subsidence',
     component: Subsidence
+  },
+  {
+    path: '/salinisation',
+    name: 'salinisation',
+    component: Salinisation
+  },
+  {
+    path: '/green',
+    name: 'green',
+    component: GreenInfra
+  },
+  {
+    path: '/model',
+    name: 'model',
+    component: Model
+  },
+  {
+    path: '/intro',
+    name: 'intro',
+    component: Intro
   }
 ];
 

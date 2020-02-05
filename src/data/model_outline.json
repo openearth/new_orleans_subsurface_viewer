@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "model_outline",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::26982" } },
+"features": [
+{ "type": "Feature", "properties": { "location": "D:\\new_orleans_viewer\\neworleans\\data\\model\\merged.tif" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 1115000.0, 180000.0 ], [ 1145000.0, 180000.0 ], [ 1145000.0, 155000.0 ], [ 1115000.0, 155000.0 ], [ 1115000.0, 180000.0 ] ] ] ] } }
+]
+}

@@ -1,46 +1,46 @@
 <template>
+
   <v-dialog
     v-model="showWelcomeDialog"
-    max-width="640"
+    fullscreen
   >
-    <v-card>
-      <v-card-title>
+   <v-card>
+    <v-img
+      class="title text-center"
+      src="~@/assets/img/intro_pic2.png"
+      height = 937px
+    >
+      <v-card-title></v-card-title>
+      <v-spacer>
         New Orleans: Urban geology and Groundwater
-      </v-card-title>
+      </v-spacer>
 
+      <v-layout align-end justify-center>
+          <v-flex xs6>
+            <!--- v-flex is centered now, but we need to center button inside v-flex -->
+            <div class="text-xs-center">
+              <v-btn
+               class="primary "
+               text
+               @click="onStartClick"
+               >Let's get started
+               </v-btn>
+            </div>
+          </v-flex>
+      </v-layout>
 
-      <div class="welcome-dialog__images2">
-       <img
-          src="@/assets/img/intro_pic.jpg"
-          alt="Deltares logo"
-        >
-      </div>
-      <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </v-card-text>
-
-
-      <v-card-actions>
+      <!-- <v-card-actions>
         <v-spacer></v-spacer>
-        <div class="welcome-dialog__images">
-              <img
-                src="@/assets/img/OE_logo.png"
-                alt="OE logo"
-              >
-              <img
-                src="@/assets/img/logo-m-2x.png"
-                alt="Deltares logo"
-              >
-        </div>
         <v-btn
-          class="primary"
+          class="primary "
           text
-          @click="onStartClick"
-        >
+          @click="onStartClick">
           Let's get started
-        </v-btn>
+        </v-btn> -->
+      <!-- </v-card-actions> -->
 
-      </v-card-actions>
+    </v-img>
+
     </v-card>
   </v-dialog>
 </template>
@@ -72,21 +72,51 @@ export default {
 </script>
 
 <style>
-  .welcome-dialog__images {
+/* .background { */
+    /* The image used */
+    /* 'background-image': `url(${require('@/assets/img/intro_pic.jpg')})` */
+    /* background: url('https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg'); */
+    /* background: url('~@/assets/img/intro_pic2.png'); */
+
+    /* Full height */
+    /* width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0; */
+
+    /* background-size: cover; */
+    /* background-color: red; */
+    /* transform: scale(1.1); */
+
+    /* Center and scale the image nicely */
+    /* background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  } */
+  /* .welcome-dialog__images {
     display: flex;
-    padding: 0.5 1.5rem 5;
+    padding: 3rem 2rem 5rem;
+    margin-right: 80rem;
+    margin-top: 20rem;
+    margin-bottom: 0rem;
   }
 
   .welcome-dialog__images img {
-    width: 5rem;
-    margin-right: 8rem;
+    width: 8rem;
+    margin-right: 3rem;
   }
     .welcome-dialog__images2 {
     display: flex;
-    padding: 1.5rem 5rem 1.5rem;
+    padding: 5rem;
   }
     .welcome-dialog__images2 img {
-    width: 30rem;
-    margin-right: 10rem;
-  }
+    width: 100%;
+    /* margin-right: 10rem;
+    margin-left: 10rem; */
+  /* }  */
+  /* .primary {
+    position: justify-center
+    justify-center
+  } */
 </style>

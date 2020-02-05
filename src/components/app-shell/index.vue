@@ -17,11 +17,14 @@
         right
         style="width: auto;"
       >
+        <v-tab :to="{ name: 'intro' }">
+          Introduction
+        </v-tab>
         <v-tab :to="{ name: 'geology' }">
           Geology
         </v-tab>
-        <v-tab :to="{ name: 'model' }">
-          Geo-Model
+        <v-tab :to="{ name: 'subsurface' }">
+          Subsurface
         </v-tab>
         <v-tab :to="{ name: 'data' }">
           Data & Maps
@@ -31,6 +34,15 @@
         </v-tab>
         <v-tab :to="{ name: 'subsidence' }">
           Subsidence
+        </v-tab>
+        <v-tab :to="{ name: 'salinisation' }">
+          Salinisation
+        </v-tab>
+        <v-tab :to="{ name: 'green' }">
+          Green Infra
+        </v-tab>
+        <v-tab :to="{ name: 'model' }">
+          Model
         </v-tab>
       </v-tabs>
     </v-app-bar>

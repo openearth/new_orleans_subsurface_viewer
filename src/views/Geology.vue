@@ -37,7 +37,7 @@ const LINE_STYLE = {
   },
   paint: {
     'line-color': '#008fc5',
-    'line-width': 5
+    'line-width': 4,
   }
 };
 
