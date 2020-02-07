@@ -38,6 +38,7 @@ const LINE_STYLE = {
   paint: {
     'line-color': '#008fc5',
     'line-width': 4,
+    'line-dasharray': [0.1, 1.8]
   }
 };
 

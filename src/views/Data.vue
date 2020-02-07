@@ -28,6 +28,10 @@ export default {
       {
         id: 'LiDAR_DEM_1m',
         layer: 'new_orleans_geo:LiDAR_DEM_1m'
+      },
+      {
+        id: 'Lithology',
+        layer: 'new_orleans:Lithology'
       }
     ],
     visibleLayers: [],
@@ -37,26 +41,7 @@ export default {
     rasterLayers() {
       return this.$store.getters['mapbox/rasterLayers'];
     },
-
-    // updateLegend: {
-
-    //   get () {
-    //     return this.$store.getters['mapbox/legendLayer'];
-    //   },
-
-    //   set () {
-    //     if(this.visibleLayers){
-    //       console.log("visibleLayers is:",this.visibleLayers);
-    //       this.$store.commit('mapbox/SET_LEGEND_LAYER', this.layers);
-    //     } else
-    //     {
-    //       this.$store.commit('mapbox/SET_LEGEND_LAYER', null);
-    //     }
-    //   }
-    // },
-
      legendLayer() {
-       console.log("computed property legendLayer")
       return this.$store.getters['mapbox/legendLayer'];
     }
   },
@@ -91,7 +76,7 @@ export default {
         const layerToAddId = arrayDiff(newArray, oldArray)[0];
         const layerToAdd = this.layers.find(({ id }) => id === layerToAddId);
         this.addLayer(layerToAdd);
-        this.$store.commit('mapbox/SET_LEGEND_LAYER', this.layers[0].layer);
+        this.$store.commit('mapbox/SET_LEGEND_LAYER', layerToAdd.layer);
       }
     }
   }

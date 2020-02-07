@@ -28,7 +28,7 @@ export default {
 <style>
   .layer-legend {
     position: absolute;
-    width: 100px;
+    width: 160px;
     bottom: 2rem;
     left: .5rem;
     background-color: white;
@@ -39,6 +39,7 @@ export default {
     z-index: 1;
   }
   .layer-legend__image {
+    justify-content: flex-start;
     border-radius: 4px;
     margin-left: 10px;
     margin-top: 5px;
