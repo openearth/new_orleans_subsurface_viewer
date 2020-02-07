@@ -1,15 +1,19 @@
 <template>
-  <div>
+<!--
+  <v-card
+
+  > -->
     <v-card-title>
       Introduction
     </v-card-title>
-    <v-subheader>
-      Coming soon
-    </v-subheader>
-    <v-sheet class="pa-5">
 
-    </v-sheet>
-  </div>
+    <!-- <v-subheader>
+      Coming soon
+    </v-subheader> -->
+
+  <!-- </v-card> -->
+
+
 </template>
 
 <script>

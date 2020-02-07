@@ -21,5 +21,5 @@ export default function({
     ...rest,
   }, { encode, sort: false });
 
-  return `${ url }?${ params }`;
+  return  `${ url || process.env.VUE_APP_GEOSERVER_BASE_URL }?${ params }`;
 }

@@ -30,12 +30,34 @@ export default {
         layer: 'new_orleans_geo:LiDAR_DEM_1m'
       }
     ],
-    visibleLayers: []
+    visibleLayers: [],
   }),
 
   computed: {
     rasterLayers() {
       return this.$store.getters['mapbox/rasterLayers'];
+    },
+
+    // updateLegend: {
+
+    //   get () {
+    //     return this.$store.getters['mapbox/legendLayer'];
+    //   },
+
+    //   set () {
+    //     if(this.visibleLayers){
+    //       console.log("visibleLayers is:",this.visibleLayers);
+    //       this.$store.commit('mapbox/SET_LEGEND_LAYER', this.layers);
+    //     } else
+    //     {
+    //       this.$store.commit('mapbox/SET_LEGEND_LAYER', null);
+    //     }
+    //   }
+    // },
+
+     legendLayer() {
+       console.log("computed property legendLayer")
+      return this.$store.getters['mapbox/legendLayer'];
     }
   },
 
@@ -43,10 +65,12 @@ export default {
     addLayer(layer) {
       const wmsLayer = buildWmsLayer(layer);
       this.$store.commit('mapbox/ADD_RASTER_LAYER', wmsLayer);
+
     },
 
     removeLayer(layerId) {
       this.$store.commit('mapbox/REMOVE_RASTER_LAYER', layerId);
+
     },
 
     formatIdToLabel(id) {
@@ -56,15 +80,18 @@ export default {
 
   watch: {
     visibleLayers(newArray, oldArray) {
+      // console.log("Visible layers is activated!");
       const removeLayerId = newArray.length < oldArray.length;
       if(removeLayerId) {
         const layerToRemoveId = arrayDiff(oldArray, newArray)[0];
         this.removeLayer(layerToRemoveId);
+        this.$store.commit('mapbox/SET_LEGEND_LAYER', null);
       }
       else {
         const layerToAddId = arrayDiff(newArray, oldArray)[0];
         const layerToAdd = this.layers.find(({ id }) => id === layerToAddId);
         this.addLayer(layerToAdd);
+        this.$store.commit('mapbox/SET_LEGEND_LAYER', this.layers[0].layer);
       }
     }
   }

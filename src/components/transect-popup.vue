@@ -2,7 +2,7 @@
    <v-card
     class="wpsResponse"
     min-width="600"
-    max-height="800"
+    max-height="600"
   >
     <v-toolbar dense flat>
       <v-toolbar-title>

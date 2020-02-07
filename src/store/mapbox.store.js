@@ -6,6 +6,7 @@ export default {
     rasterLayers: [],
     activeFeature: null,
     requestData:null,
+    legendLayer: null,
   },
 
   getters: {
@@ -13,6 +14,7 @@ export default {
     rasterLayers: state => state.rasterLayers,
     activeFeature: state => state.activeFeature,
     requestData: state => state.requestData,
+    legendLayer: state => state.legendLayer
   },
 
   mutations: {
@@ -51,12 +53,19 @@ export default {
       state.requestData = requestData;
     },
 
+    SET_LEGEND_LAYER(state,layer) {
+      state.legendLayer = layer;
+    },
+
     RESET_ALL(state) {
       state.geoJsonLayers = [];
       state.rasterLayers = [];
       state.activeFeature = null;
-      state.section = null;
-    }
+      state.requestData = null;
+      state.legendLayer = null;
+    },
+
+
   },
 
   actions: {

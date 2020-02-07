@@ -11,6 +11,10 @@
       <v-toolbar-title>
         NO2SV
       </v-toolbar-title>
+
+
+
+
       <v-tabs
         background-color="primary"
         dark
@@ -48,6 +52,10 @@
     </v-app-bar>
 
     <v-content>
+      <risk-legend
+        v-if="legendLayer"
+        :legendLayer="legendLayer"
+      />
       <mapbox-map />
       <feature-details
         v-if="!!activeFeature"
@@ -70,6 +78,7 @@ import MapboxMap from '@/components/mapbox-map';
 import WelcomeDialog from './welcome-dialog';
 import FeatureDetails from '@/components/feature-details';
 import requestData from '@/components/transect-popup';
+import RiskLegend from '@/components/legend';
 
 export default {
   components: {
@@ -77,7 +86,8 @@ export default {
     MapboxMap,
     WelcomeDialog,
     FeatureDetails,
-    requestData
+    requestData,
+    RiskLegend
 
   },
 
@@ -88,6 +98,9 @@ export default {
     requestData() {
       return this.$store.getters['mapbox/requestData'];
     },
+     legendLayer() {
+      return this.$store.getters['mapbox/legendLayer'];
+    }
   }
 };
 </script>
