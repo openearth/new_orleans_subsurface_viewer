@@ -31,7 +31,7 @@ export default {
       },
       {
         id: 'Lithology',
-        layer: 'new_orleans:Lithology'
+        layer: 'new_orleans_geo:Lithology'
       }
     ],
     visibleLayers: [],

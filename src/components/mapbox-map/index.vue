@@ -93,9 +93,7 @@ export default {
     },
     layerClick(e) {
       //highlight selected feature
-      // var features = this.$root.map.queryRenderedFeatures(e.point, { layers: ['boreholes'] });
       var features = this.$root.map.queryRenderedFeatures(e.point, { layers: [e.features[0].layer.source] });
-      // console.log(features[0])
       if (!features.length) {
           return;
       }

@@ -75,7 +75,7 @@ export default {
     async getSection() {
       try {
         this.wpsResponse  = await transectRepo.getTransect(this.requestData);
-        console.log("wpsResponse", this.htmlPlots)
+        // console.log("wpsResponse", this.htmlPlots)
         this.hasLoaded = true;
       }
       catch(err) {
