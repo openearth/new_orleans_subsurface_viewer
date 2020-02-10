@@ -132,7 +132,6 @@ export default {
 
       try {
         this.featureDetails = await featureDetailsRepo.getReport(wpsIdentifier, uid);
-        // console.log(this.featureDetails)
         this.hasLoaded = true;
       }
       catch(err) {
@@ -170,8 +169,8 @@ const hasExtension = extension =>
 
   .feature-details__column img {
     display: block;
-    max-width: 600px;
-    max-height: 500px;
+    max-width: 1000px;
+    max-height: 800px;
   }
 
   .feature-details__column:not(:last-child) {
