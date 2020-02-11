@@ -132,9 +132,8 @@ export default {
 
     async getSection() {
       console.log('WPS request');
+
       try {
-        // this.wpsResponse  = await transectRepo.getTransect(this.linestring.geometry.coordinates);
-        // this.$store.commit("mapbox/SET_REQUEST_DATA",this.wpsResponse);
         this.$store.commit("mapbox/SET_REQUEST_DATA",this.linestring.geometry.coordinates);
       }
       catch(err) {

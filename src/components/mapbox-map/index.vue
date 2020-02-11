@@ -92,45 +92,8 @@ export default {
       });
     },
     layerClick(e) {
-      // this.$root.map.removeLayer('selectedFeature');
-      // this.$root.map.removeSource('selectedFeature');
-      //highlight selected feature
       var features = this.$root.map.queryRenderedFeatures(e.point, { layers: [e.features[0].layer.source] });
-      // if (!features.length) {
-      //     return;
-      // }
-      // if (typeof this.$root.map.getLayer('selectedFeature') !== "undefined" ){
-      //     this.$root.map.removeLayer('selectedFeature');
-      //     this.$root.map.removeSource('selectedFeature');
-      // }
       var feature = features[0];
-      // //I think you could add the vector tile feature to the map, but I'm more familiar with JSON
-      //       this.$root.map.addSource('selectedFeature', {
-      //     "type":"geojson",
-      //     "data": feature.toJSON()
-      // });
-
-      // if (e.features[0].layer.type == "line") {
-      //   this.$root.map.addLayer({
-      //     "id": "selectedFeature",
-      //     "type": e.features[0].layer.type,
-      //     "source": "selectedFeature",
-      //     "paint": {
-      //       'line-color': '#FFFF00',
-      //       'line-width': 4,
-      //     } });
-      //   } else {
-      //   this.$root.map.addLayer({
-      //     "id": "selectedFeature",
-      //     "type": e.features[0].layer.type,
-      //     "source": "selectedFeature",
-      //     "paint": {
-      //       'circle-radius': 6,
-      //       'circle-color': '#FFFF00',
-      //     }
-      //   });
-      // }
-
       const layerId = feature.layer.id;
       const { uid } = feature.properties;
       this.$store.commit('mapbox/SET_ACTIVE_FEATURE', {

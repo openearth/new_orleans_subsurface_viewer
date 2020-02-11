@@ -128,8 +128,11 @@ export default {
 
   destroyed() {
     this.removeLayer();
-    this.$root.map.removeLayer('selectedFeature');
-    this.$root.map.removeSource('selectedFeature');
+    if (typeof this.$root.map.getLayer('selectedFeature') !== 'undefined'){
+      this.$root.map.removeLayer('selectedFeature');
+      this.$root.map.removeSource('selectedFeature');
+    }
+
   },
 
   watch: {
