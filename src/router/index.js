@@ -16,10 +16,7 @@ import Intro from '@/views/Intro';
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/',
-    redirect: '/intro'
-  },
+
   {
     path: '/geology',
     name: 'geology',

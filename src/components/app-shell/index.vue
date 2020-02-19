@@ -12,16 +12,16 @@
         NO2SV
       </v-toolbar-title>
 
-
-
+      <welcome-dialog />
 
       <v-tabs
         background-color="primary"
         dark
         right
         style="width: auto;"
+        v-model="selectedTab"
       >
-        <v-tab :to="{ name: 'intro' }">
+        <v-tab key="first"  href="#/intro" :to="{ name: 'intro' }" >
           Introduction
         </v-tab>
         <v-tab :to="{ name: 'geology' }">
@@ -67,7 +67,7 @@
       />
     </v-content>
 
-    <welcome-dialog />
+
 
   </v-app>
 </template>
@@ -81,6 +81,11 @@ import requestData from '@/components/transect-popup';
 import RiskLegend from '@/components/legend';
 
 export default {
+  data: () => ({
+    selectedTab:false
+  }),
+
+
   components: {
     Sidebar,
     MapboxMap,
@@ -101,6 +106,10 @@ export default {
      legendLayer() {
       return this.$store.getters['mapbox/legendLayer'];
     }
+  },
+
+  mounted () {
+    this.selectedTab = "first";
   }
 };
 </script>

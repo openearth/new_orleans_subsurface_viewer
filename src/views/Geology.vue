@@ -27,7 +27,21 @@ const CIRCLE_STYLE = {
   layout: {},
   paint: {
     'circle-radius': 5,
-    'circle-color': '#008fc5',
+    "circle-opacity" : 0.7,
+    // 'circle-color': '#008fc5',
+    'circle-color': [
+        'match',
+        ['get', 'layer'],
+        'shallow_wells',
+        '#54b04a',
+        'deltares_campaign',
+        '#5491e6',
+        'deep_wells',
+        '#cb706d',
+        'nola_04',
+        '#ffd28a',
+/* other */ '#ccc'
+]
   }
 };
 const LINE_STYLE = {
@@ -47,7 +61,8 @@ export default {
     layers: [
       {
         id: 'boreholes',
-        type: 'circle'
+        type: 'circle',
+        source: 'layer',
       },
       {
         id: 'cross_sections',
@@ -60,6 +75,7 @@ export default {
   methods: {
     async addLayer({ id, type }) {
       const layer = await this.fakeRequestToBuildLayer(id, type);
+      console.log(type)
       this.$store.commit('mapbox/ADD_GEOJSON_LAYER', layer);
     },
 
