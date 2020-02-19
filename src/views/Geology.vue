@@ -105,14 +105,13 @@ export default {
       if(removeLayerId) {
         const layerToRemoveId = arrayDiff(oldArray, newArray)[0];
         this.removeLayer(layerToRemoveId);
-        this.$store.commit('mapbox/SET_LEGEND_LAYER', null);
+        // this.$store.commit('mapbox/SET_LEGEND_LAYER', null);
       }
       else {
         const layerToAddId = arrayDiff(newArray, oldArray)[0];
         const layerToAdd = this.layers.find(({ id }) => id === layerToAddId);
         this.addLayer(layerToAdd);
-        console.log(layerToAdd)
-        this.$store.commit('mapbox/SET_LEGEND_LAYER', layerToAdd);
+        // this.$store.commit('mapbox/SET_LEGEND_LAYER', layerToAdd);
       }
     }
   }

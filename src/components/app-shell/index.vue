@@ -40,13 +40,13 @@
           Subsidence
         </v-tab>
         <v-tab :to="{ name: 'salinisation' }">
-          Salinisation
+          Salinization
         </v-tab>
         <v-tab :to="{ name: 'green' }">
           Green Infra
         </v-tab>
         <v-tab :to="{ name: 'model' }">
-          Model
+          Groundwater Model
         </v-tab>
       </v-tabs>
     </v-app-bar>
