@@ -29,9 +29,21 @@ export default {
         id: 'LiDAR_DEM_1m',
         layer: 'new_orleans_geo:LiDAR_DEM_1m'
       },
+       {
+        id: 'groundwater_levels_msl',
+        layer: 'new_orleans_data:groundwater_levels_msl'
+      },
       {
         id: 'Lithology',
         layer: 'new_orleans_geo:Lithology'
+      },
+      {
+        id: 'shallow_subsidence_vulnerability',
+        layer: 'new_orleans_data:shallow_subsidence_vulnerability'
+      },
+      {
+        id: 'sequence_types',
+        layer: 'new_orleans_data:sequence_types'
       }
     ],
     visibleLayers: [],
