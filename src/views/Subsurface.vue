@@ -4,7 +4,10 @@
       Subsurface
     </v-card-title>
     <v-card-text>
-      This function provides information about the subsurface based on the drawn transect.
+      This section provides information about the subsurface derived from lithology model created by Deltares.
+    </v-card-text>
+    <v-card-text>
+      Tip: Draw a line on the map within the model boundaries and press get section.
     </v-card-text>
     <v-sheet class="pa-5">
       <v-switch
@@ -34,6 +37,12 @@
       <!-- <pre>{{ linestring }}</pre> -->
     </v-sheet>
       <div>
+               <v-img
+            class="t-5"
+            aspect-ratio="2"
+            contain
+            src="~@/assets/img/voxel_model.png"
+           ></v-img>
   </div>
   </div>
 

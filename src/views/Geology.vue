@@ -3,6 +3,10 @@
     <v-card-title>
       Geology
     </v-card-title>
+      <v-card-text>The current section provides information about the subsurface characteristics derived from boreholes.
+         The borehole layer shows the locations of the boreholes and when a certain borehole is selected additional information shows
+         in the shape of the subsurface plot and links to reports. Every selected cross-section provides an interpretation of the adjacent subsurface.
+      </v-card-text>
     <v-sheet class="pa-5">
       <v-switch
         v-for="layer in layers"
@@ -14,6 +18,17 @@
         hide-details
       />
     </v-sheet>
+     <v-card-text>Tip: Click on a point or line on the map.
+      </v-card-text>
+
+      <v-spacer>     </v-spacer>
+       <v-img
+            class="t-5"
+            aspect-ratio="2"
+            contain
+            src="~@/assets/img/legend_borelogs.png"
+           ></v-img>
+
   </div>
 </template>
 

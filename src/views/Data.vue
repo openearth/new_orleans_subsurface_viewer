@@ -3,6 +3,9 @@
     <v-card-title>
       Data & Maps
     </v-card-title>
+    <v-card-text>
+      This section provides additional information from various topics.
+           </v-card-text>
     <v-sheet class="pa-5">
       <v-switch
         v-for="layer in layers"
