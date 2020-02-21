@@ -109,6 +109,15 @@ export default {
 
   computed: {
     htmlPlots() {
+      // let responses = this.featureDetails.map(({ url }) => url); //extract all urls from the object
+      // const result = responses.filter(word => !!word); //filter only defined data
+
+      // let html = result.filter(url => url.endsWith("html"));
+      // console.log('result is',html);
+      // console.log("what do we return",this.featureDetails.filter(({ url }) => hasExtension('html')(url)) )
+
+
+
       return this.featureDetails.filter(({ url }) => hasExtension('html')(url));
       // For testing :: return [ { url: 'FAKE_DATA/plot_1575300895.767069.html' } ];
     },
@@ -117,7 +126,6 @@ export default {
       // For testing :: return [ { url: 'https://cataas.com/cat/says/Oh%20hi%20Lilia!' } ];
     },
     textDocuments() {
-      console.log(this.featureDetails['url']);
       return this.featureDetails.filter(({ url }) => hasExtension('pdf')(url));
     }
   },
@@ -157,7 +165,6 @@ const hasExtension = extension =>
     equals(extension), // @REFACTOR :: do regexps
     trim,
     last,
-    // console.log(extension),
     split('.')
   );
 </script>

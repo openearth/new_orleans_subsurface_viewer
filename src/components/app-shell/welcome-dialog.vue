@@ -10,7 +10,7 @@
     <v-img
       class="title text-center"
       src="~@/assets/img/intro_pic2.png"
-      height = 937px
+      height = 1080
     >
       <v-card-title></v-card-title>
       <v-spacer>
