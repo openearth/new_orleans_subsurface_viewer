@@ -117,6 +117,7 @@ export default {
       // For testing :: return [ { url: 'https://cataas.com/cat/says/Oh%20hi%20Lilia!' } ];
     },
     textDocuments() {
+      console.log(this.featureDetails['url']);
       return this.featureDetails.filter(({ url }) => hasExtension('pdf')(url));
     }
   },
@@ -156,6 +157,7 @@ const hasExtension = extension =>
     equals(extension), // @REFACTOR :: do regexps
     trim,
     last,
+    // console.log(extension),
     split('.')
   );
 </script>

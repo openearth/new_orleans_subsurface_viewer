@@ -21,7 +21,7 @@
         style="width: auto;"
         v-model="selectedTab"
       >
-        <v-tab key="first"  href="#/intro" :to="{ name: 'intro' }" >
+        <v-tab :to="{ name: 'intro' }" >
           Introduction
         </v-tab>
         <v-tab :to="{ name: 'geology' }">

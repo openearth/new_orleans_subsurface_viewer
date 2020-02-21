@@ -16,7 +16,15 @@ import Intro from '@/views/Intro';
 Vue.use(VueRouter);
 
 const routes = [
-
+  {
+    path: '/',
+    redirect: '/intro'
+  },
+  {
+    path: '/intro',
+    name: 'intro',
+    component: Intro
+  },
   {
     path: '/geology',
     name: 'geology',
@@ -57,11 +65,7 @@ const routes = [
     name: 'model',
     component: Model
   },
-  {
-    path: '/intro',
-    name: 'intro',
-    component: Intro
-  }
+
 ];
 
 const router = new VueRouter({
