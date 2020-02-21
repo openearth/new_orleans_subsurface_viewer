@@ -36,14 +36,15 @@
       </v-btn>
       <!-- <pre>{{ linestring }}</pre> -->
     </v-sheet>
-      <div>
-               <v-img
-            class="t-5"
-            aspect-ratio="2"
-            contain
-            src="~@/assets/img/voxel_model.png"
-           ></v-img>
-  </div>
+    <v-sheet class="mt-12">
+
+        <v-img
+        aspect-ratio="2"
+        contain
+        src="~@/assets/img/voxel_model.png"
+        ></v-img>
+
+    </v-sheet>
   </div>
 
 </template>

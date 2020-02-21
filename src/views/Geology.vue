@@ -18,16 +18,16 @@
         hide-details
       />
     </v-sheet>
-     <v-card-text>Tip: Click on a point or line on the map.
-      </v-card-text>
+    <v-card-text>Tip: Click on a point or line on the map.</v-card-text>
+    <v-sheet class="mt-10">
 
-      <v-spacer>     </v-spacer>
-       <v-img
-            class="t-5"
-            aspect-ratio="2"
-            contain
-            src="~@/assets/img/legend_borelogs.png"
-           ></v-img>
+        <v-img
+          aspect-ratio="2"
+          contain
+          src="~@/assets/img/legend_borelogs.png"
+        ></v-img>
+
+    </v-sheet>
 
   </div>
 </template>

@@ -14,10 +14,15 @@
             This application provides static maps and functionality to extract information from subsurface models and different borelogs. Additionally, some of the data is
             accompanied by relevant reports. This web application aims at providing relevant information for experts, decision-makers and citizens.
            </v-card-text>
-            <v-img
-            class="title text-center"
-            src="~@/assets/img/o.jpg"
-           ></v-img>
+
+            <v-sheet class="mt-5">
+                <v-img
+                class="spacing-playground"
+                src="~@/assets/img/o.jpg"
+                >
+                </v-img>
+            </v-sheet>
+
 
         </v-card>
       <!-- </v-dialog> -->
@@ -41,3 +46,5 @@ export default {
 //   },
 };
 </script>
+<style>
+</style>
