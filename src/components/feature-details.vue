@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { compose, split, last, equals, trim } from 'ramda';
+
 import featureDetailsRepo from '@/repo/feature-details.repo';
 
 export default {
@@ -109,24 +109,32 @@ export default {
 
   computed: {
     htmlPlots() {
-      // let responses = this.featureDetails.map(({ url }) => url); //extract all urls from the object
-      // const result = responses.filter(word => !!word); //filter only defined data
+      var result = this.featureDetails.filter(function (el) {
+        return el.id == "plot_file" &&
+         el.name == "Plot File" &&
+         el.url;
+        });
 
-      // let html = result.filter(url => url.endsWith("html"));
-      // console.log('result is',html);
-      // console.log("what do we return",this.featureDetails.filter(({ url }) => hasExtension('html')(url)) )
-
-
-
-      return this.featureDetails.filter(({ url }) => hasExtension('html')(url));
-      // For testing :: return [ { url: 'FAKE_DATA/plot_1575300895.767069.html' } ];
+      return result;
     },
     images() {
-      return this.featureDetails.filter(({url}) => hasExtension('png')(url));
-      // For testing :: return [ { url: 'https://cataas.com/cat/says/Oh%20hi%20Lilia!' } ];
+      var result = this.featureDetails.filter(function (el) {
+        return el.id == "section_file" &&
+         el.name == "Section File" &&
+         el.url;
+        });
+      return result;
     },
     textDocuments() {
-      return this.featureDetails.filter(({ url }) => hasExtension('pdf')(url));
+
+      var result = this.featureDetails.filter(function (el) {
+        return el.id == "report" || el.id == "log_pdf" &&
+         el.name == "Report" || el.name == "Log Pdf" &&
+         el.url !== 'undefined';
+        });
+
+      var filtered = result.filter(function(el) { return el.url; }); //filtering out the undefined urls
+      return filtered;
     }
   },
 
@@ -160,13 +168,6 @@ export default {
   }
 };
 
-const hasExtension = extension =>
-  compose(
-    equals(extension), // @REFACTOR :: do regexps
-    trim,
-    last,
-    split('.')
-  );
 </script>
 
 <style>

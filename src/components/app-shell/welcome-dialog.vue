@@ -1,4 +1,5 @@
 <template>
+  <v-container fluid fill-height>
   <v-dialog
     v-model="showWelcomeDialog"
     fullscreen
@@ -10,7 +11,8 @@
     <v-img
       class="title text-center"
       src="~@/assets/img/intro_pic2.png"
-      height = 1080
+
+      height="100vh"
     >
       <v-card-title></v-card-title>
       <v-spacer>
@@ -36,7 +38,7 @@
     </v-img>
     </v-card>
   </v-dialog>
-
+  </v-container>
 </template>
 
 <script>
