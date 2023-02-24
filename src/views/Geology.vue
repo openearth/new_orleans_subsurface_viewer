@@ -56,7 +56,7 @@ const CIRCLE_STYLE = {
         'nola_04',
         '#ffd28a',
         'city_park',
-        '#883398',
+        '#883399',
 /* other */ '#ccc'
 ]
   }
