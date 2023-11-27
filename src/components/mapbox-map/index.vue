@@ -13,7 +13,7 @@
 
           <!-- Map Controls -->
       <v-mapbox-geocoder />
-      <v-mapbox-navigation-control position="bottom-right" />
+      <v-mapbox-navigation-control position="top-right" />
       <map-control-baselayer
         :layers="mapBaseLayers"
         position="bottom-right"
