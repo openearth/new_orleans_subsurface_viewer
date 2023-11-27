@@ -10,7 +10,7 @@
     </v-card-text>
 
     <v-sheet class="pa-5">
-      <v-dialog width="900" v-model="dialog">
+      <v-dialog max-width="900" v-model="dialog" scrollable>
         <template v-slot:activator="{ on, attrs }">
           <v-btn v-bind="attrs" v-on="on">Read more</v-btn>
         </template>
@@ -21,7 +21,10 @@
               Groundwater monitoring New Orleans
             </v-card-title>
 
-            <v-card-text>
+            <v-divider></v-divider>
+
+            <v-card-text style="height: 900px;">
+              <br>
               <p>This section of the web application provides insight into the groundwater monitoring locations and the collected monitoring results.</p>
               <p>Each measurement site contains information regarding the observed groundwater levels, as well as borehole geology descriptions and the results of sampling and field measurements.</p>
               <p><strong>The principal objective</strong> is to understand the phreatic (shallow) groundwater fluctuation in urban New Orleans.</p>
@@ -78,13 +81,12 @@
               <img src="@/assets/img/sensor_hand.png">
             </v-card-text>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
+            <v-divider></v-divider>
 
-              <v-btn
-                text="Close Dialog"
-                @click="isActive.value = false"
-              ></v-btn>
+            <v-card-actions>
+              <v-btn color="primary" block @click="dialog = false">
+                Close Dialog
+              </v-btn>
             </v-card-actions>
           </v-card>
         </template>
