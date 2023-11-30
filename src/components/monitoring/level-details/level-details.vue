@@ -10,22 +10,22 @@
       <v-divider v-if="activeLevel" class="my-8" />
   
       <h3 v-if="activeLevel" class="level-details__title text-h6">
-        Details peilfilter {{ id }}
+        Details well {{ id }}
       </h3>
   
       <v-simple-table v-if="activeLevel">
         <template v-slot:default>
           <tbody>
             <tr>
-              <td>Naam</td>
+              <td>Name</td>
               <td>{{ id }}</td>
             </tr>
             <tr v-if="filterTop">
-              <td>Top Peilbuis  (NAP)</td>
+              <td>Top of filter (feet + NAVD88)</td>
               <td>{{ filterTop.toFixed(2) }}</td>
             </tr>
             <tr v-if="filterBottom">
-              <td>Onderkant filter (NAP)</td>
+              <td>Bottom of filter (feet + NAVD88)</td>
               <td>{{ filterBottom.toFixed(2) }}</td>
             </tr>
           </tbody>
@@ -35,22 +35,22 @@
       <v-divider v-if="activeLevel" class="my-8" />
   
       <h3 v-if="activeLevel" class="level-details__title text-h6">
-        Details metingen {{ id }}
+        Details well observations {{ id }}
       </h3>
   
       <v-simple-table v-if="activeLevel">
         <template v-slot:default>
           <tbody>
             <tr>
-              <td>Min gws (NAP)</td>
+              <td>Min ground water stage (feet + NAVD88)</td>
               <td>{{ min.toFixed(2) }}</td>
             </tr>
             <tr>
-              <td>Max gws (NAP)</td>
+              <td>Max ground water stage (feet + NAVD88)</td>
               <td>{{ max.toFixed(2) }}</td>
             </tr>
             <tr>
-              <td>Gemiddelde gws (NAP)</td>
+              <td>Average ground waterstage (feet + NAVD88)</td>
               <td>{{ mean.toFixed(2) }}</td>
             </tr>
           </tbody>
