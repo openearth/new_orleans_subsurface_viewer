@@ -38,6 +38,12 @@
         popup: null,
       };
     },
+    destroyed() {
+      this.$root.map.removeLayer('monitoring-locations');
+      this.$root.map.removeSource('monitoring-locations');
+      this.$root.map.removeLayer('selected-location');
+      this.$root.map.removeSource('selected-location');
+    },
     created() {
       this.$root.mapbox = Mapbox;
       this.popup = new Mapbox.Popup({
@@ -46,28 +52,21 @@
         offset: 14,
       });
 
-      this.$root.$on('map-loaded', () => {
-        console.log('yo');
+      if(this.$root.mapLoaded) {
         this.addListeners();
         this.populateMap();
-      });
-
+      } else {
+        this.$root.$on('map-loaded', () => {
+          this.addListeners();
+          this.populateMap();
+        });
+      }
     },
-    // computed: {
-    //   //...mapGetters('app', [ 'panelIsCollapsed' ]),
-    //   //...mapGetters('locations', [ 'locations', 'selectedLocation' ]),
-    // },
     methods: {
-      // ...mapActions('app', [ 'setPanelIsCollapsed' ]),
-      // ...mapActions('level', { resetLevel: 'reset' }),
-      // ...mapActions('ph', { resetPh: 'reset' }),
-      // ...mapActions('ec', { resetEc: 'reset' }),
-      // ...mapActions('redox', { resetRedox: 'reset' }),
-      //...mapActions('locations', [ 'resetActiveLocation', 'setActiveLocation', 'setSelectedLocation' ]),
       addListeners() {
-        this.$root.map.on('click', 'locations', this.onClickMarker);
-        this.$root.map.on('mouseenter', 'locations', this.onMouseEnter);
-        this.$root.map.on('mouseleave', 'locations', this.onMouseLeave);
+        this.$root.map.on('click', 'monitoring-locations', this.onClickMarker);
+        this.$root.map.on('mouseenter', 'monitoring-locations', this.onMouseEnter);
+        this.$root.map.on('mouseleave', 'monitoring-locations', this.onMouseLeave);
       },
       addLocationToMap() {
         const activeLocationFeature = featureCollection([ {
@@ -81,7 +80,7 @@
           .setData(activeLocationFeature);
       },
       createLocationsSource() {
-        this.$root.map.addSource('locations', {
+        this.$root.map.addSource('monitoring-locations', {
           type: 'geojson',
           data: featureCollection(
             this.locations.map((location) => ({
@@ -93,9 +92,9 @@
         });
 
         this.$root.map.addLayer({
-          id: 'locations',
+          id: 'monitoring-locations',
           type: 'circle',
-          source: 'locations',
+          source: 'monitoring-locations',
           paint: MARKER_STYLES,
         });
       },
@@ -115,25 +114,10 @@
           paint: SELECTED_MARKER_STYLES,
         });
       },
-      // deferredMountedTo(map) {
-      //   this.$root.map = map;
-      //   console.log(map);
-      //   this.$root.mapLoaded = true;
-      //   this.zoomToCollection({ padding: 150 });
-      // },
       onClickMarker(event) {
         const { loc_id } = event.features[0].properties;
 
         this.$emit('click-marker', {id: loc_id});
-
-        // this.resetLevel();
-        // this.resetPh();
-        // this.resetEc();
-        // this.resetRedox();
-
-        // this.setActiveLocation({ id: loc_id });
-        // this.setSelectedLocation({ id: loc_id });
-        // this.setPanelIsCollapsed({ isCollapsed: false });
       },
       onMouseEnter(event) {
         const { features, lngLat } = event;
@@ -168,9 +152,9 @@
         this.createSelectedLocationSource();
       },
       removeListeners() {
-        this.$root.map.off('click', 'locations', this.onClickMarker);
-        this.$root.map.off('mouseenter', 'locations', this.onMouseEnter);
-        this.$root.map.off('mouseleave', 'locations', this.onMouseLeave);
+        this.$root.map.off('click', 'monitoring-locations', this.onClickMarker);
+        this.$root.map.off('mouseenter', 'monitoring-locations', this.onMouseEnter);
+        this.$root.map.off('mouseleave', 'monitoring-locations', this.onMouseLeave);
       },
       zoomToCollection({ padding }) {
         if (!this.locations.length) {

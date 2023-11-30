@@ -66,9 +66,9 @@
                                         <tbody>
                                             <tr>
                                                 <th class="data-table__cell">Date</th>
-                                                <th class="data-table__cell data-table__cell--align-right">{{ activeLevel.parameters.parameter
-                                                }}
-                                                    [{{ activeLevel.parameters.unit }}]</th>
+                                                <th class="data-table__cell data-table__cell--align-right">
+                                                    {{ activeLevel.parameters.parameter }} [{{ activeLevel.parameters.unit }}]
+                                                </th>
                                             </tr>
                                             <tr v-for="item in tableData" :key="item.date">
                                                 <td class="data-table__cell">{{ item.date }}</td>
@@ -85,7 +85,12 @@
             </div>
         </div>
 
-        <locations-layer :locations="locations" :active-location="activeLocation" @click-marker="onClickMarker" />
+        <locations-layer 
+            v-if="locations.length" 
+            :locations="locations"
+            :active-location="activeLocation"
+            @click-marker="onClickMarker"
+            />
     </div>
 </template>
   
