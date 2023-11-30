@@ -15,7 +15,7 @@
           <v-btn v-bind="attrs" v-on="on">Read more</v-btn>
         </template>
         
-        <template v-slot:default="{ isActive }">
+        <template v-slot:default>
           <v-card title="Dialog">
             <v-card-title>
               Groundwater monitoring New Orleans
@@ -96,6 +96,8 @@
 </template>
 
 <script>
+
+
 export default {
   data() {
     return {

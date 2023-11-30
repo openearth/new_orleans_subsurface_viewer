@@ -82,7 +82,9 @@ export default {
       this.$root.map = map;
       map.on('load', () => {
         this.$root.mapLoaded = true;
+        this.$root.$emit('map-loaded');
       });
+      
     },
     fitToBounds() {
       // @REFACTOR :: We do a simple flyto at the moment, we could also fit to actual bounds of layers

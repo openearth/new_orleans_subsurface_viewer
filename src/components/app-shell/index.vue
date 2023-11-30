@@ -1,7 +1,8 @@
 <template>
   <v-app>
     <sidebar />
-
+    <router-view name="panel" />
+    
     <v-app-bar
       class="app-header"
       app
@@ -65,6 +66,7 @@
         v-if="!!requestData"
         :feature="requestData"
       />
+      
     </v-content>
 
 
