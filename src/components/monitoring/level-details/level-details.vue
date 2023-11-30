@@ -3,7 +3,7 @@
       <v-select
         v-if="activeLocation"
         v-model="internalActiveLevelId"
-        label="Selecteer peilfilter op deze meetlocatie"
+        label="Select filter for this well"
         :items="levels"
       />
   

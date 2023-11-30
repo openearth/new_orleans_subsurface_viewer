@@ -8,7 +8,7 @@
         <div class="details d-flex flex-row">
             <div class="details__column">
                 <h3 class="text-h6">
-                    Details meetlocatie {{ loc_id }}
+                    Details well location {{ loc_id }}
                 </h3>
                 <location-details :active-location="activeLocation" />
                 <v-divider class="my-8" />
@@ -139,7 +139,7 @@ export default {
             return splitFilters.map((filter) => {
                 let suffix = '';
                 if (filter === '1') {
-                    suffix = ' - Freatisch pakket';
+                    suffix = ' - Phreatic stage';
                 } else if (filter === '2') {
                     suffix = ' - 1\u1D49 Watervoerende pakket';
                 } else if (filter === '3') {

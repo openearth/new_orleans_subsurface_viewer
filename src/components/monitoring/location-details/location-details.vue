@@ -4,11 +4,11 @@
         <template v-slot:default>
           <tbody>
             <tr>
-              <td>Naam</td>
+              <td>Name</td>
               <td>{{ id }}</td>
             </tr>
             <tr>
-              <td>Coördinaten (EPSG:28992)</td>
+              <td>Coördinates (EPSG:8744)</td>
               <td>x: {{ coordinates_rd[0] }} - y: {{ coordinates_rd[1] }}</td>
             </tr>
           </tbody>
