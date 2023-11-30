@@ -59,8 +59,7 @@
         }
       },
       mounted() {
-        console.log('area-chart mounted');
-        // this.setChartHeight();
+        this.setChartHeight();
       },
       computed: {
         baseOptions() {
@@ -104,7 +103,7 @@
         yAxis() {
           return {
             boundaryGap: [ 0, '100%' ],
-            name: 'm + NAP',
+            name: 'ft + NAVD88',
             type: 'value',
             nameLocation: 'end',
             nameTextStyle: {
@@ -170,9 +169,9 @@
               },
               markLine: {
                 data: [
-                  { yAxis: -0.4, name: 'Streefpeil Noordzeekanaal' },
-                  { yAxis: -1.03, name: 'Laagwater' },
-                  { yAxis: 1.8, name: 'Gemiddeld hoogwater' },
+                  { yAxis: -0.4, name: 'stage Mississippi' },
+                  { yAxis: -1.03, name: 'lowest tide' },
+                  { yAxis: 1.8, name: 'mean surface water level' },
                 ],
                 label: {
                   show: true,
@@ -189,7 +188,7 @@
                 },
                 symbol: [ 'none', 'none' ],
               },
-              name: 'Grondwaterstand m + NAP',
+              name: 'ground water head ft + NAVD88',
               sampling: 'lttb',
               type: 'line',
             },
@@ -198,9 +197,7 @@
       },
       methods: {
         setChartHeight() {
-          console.log(this.$refs.chart.$el);
           const { offsetHeight } = this.$refs.chart.$el;
-          console.log(offsetHeight);
           // set offset hight and remove 16px padding to prevent overflow.
           this.initOptions.height = `${ offsetHeight - 16 }px`;
         },

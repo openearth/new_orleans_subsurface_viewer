@@ -24,9 +24,9 @@
             <div class="details__column" style="margin-top: 30px">
                 <v-card>
                     <v-tabs background-color="primary" center-active dark>
-                        <v-tab>Grondwaterstand</v-tab>
-                        <v-tab>Geologie</v-tab>
-                        <v-tab>Veldmeting</v-tab>
+                        <v-tab>ground water head</v-tab>
+                        <v-tab>geology</v-tab>
+                        <v-tab>field measurement</v-tab>
 
                         <v-tab-item style="margin: 10px">
                             <h3 v-if="!activeLevel" class="text-h6">
