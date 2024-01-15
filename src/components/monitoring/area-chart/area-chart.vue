@@ -13,7 +13,7 @@
         </v-responsive>
       </div>
     </app-chart>
-  </template>
+</template>
   
   <script>
     import { use } from 'echarts/core';
@@ -50,11 +50,14 @@
       },
       data() {
         return {
-          initOptions: { height: '400px', width: '1200px' },
+          initOptions: { height: '1000px', width: '1200px' },
         };
       },
       props: {
         timeseries: {
+            type: Array,
+        },
+        statistics: {
             type: Array,
         }
       },
@@ -79,9 +82,9 @@
               trigger: 'axis',
             },
             grid: {
-              top: '16px',
+              top: '50px',
               right: '40px',
-              bottom: '70px',
+              bottom: '10px',
               left: '16px',
               containLabel: true,
               backgroundColor: '#fff',
@@ -109,8 +112,8 @@
             nameTextStyle: {
               padding: [ 0, 0, -12, 60 ],
             },
-            min: -1.2,
-            max: 2.2,
+            min: this.statistics.mingw,
+            max: this.statistics.maxgw,
           };
         },
         options() {

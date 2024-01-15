@@ -36,7 +36,7 @@
                             <h3 v-if="activeLevel" class="text-h6">
                                 Tijdreeks voor {{ id }}
                             </h3>
-                            <area-chart v-if="activeLevel" :timeseries="activeLevel.timeseries" />
+                            <area-chart v-if="activeLevel" :timeseries="activeLevel.timeseries" :statistics="activeLevel.statistics" />
                         </v-tab-item>
 
                         <v-tab-item style="margin: 10px">
@@ -241,10 +241,9 @@ export default {
 <style>
     .monitoring-panel {
         position: fixed;
-        z-index: 1;
-        z-index: 2;
+        z-index: 5;
         bottom: 0;
-        left: 360px;
+        left: 0;
         right: 0;
         height: 44vh;
         overflow: hidden;
