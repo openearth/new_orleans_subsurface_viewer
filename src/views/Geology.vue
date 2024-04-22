@@ -50,17 +50,17 @@ const CIRCLE_STYLE = {
         'shallow_wells',
         '#54B04A',
         'deltares_campaign',
-        '#54B04A',
-        'deep_wells',
         '#5491E6',
+        'deep_wells',
+        '#CB706D',
         'nola_04',
         '#FFD28A',
         'city_park',
         '#883399',
         'gwm_nola',
-        '#ABCCCC',
+        '#1F1F5C',
         'swm_nola',
-        '#D2E2F8',
+        '#FFD92F',
 /* other */ '#ccc'
 ]
   }
