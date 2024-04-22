@@ -48,15 +48,17 @@ const CIRCLE_STYLE = {
         'match',
         ['get', 'layer'],
         'shallow_wells',
-        '#54b04a',
+        '#055FF7',
         'deltares_campaign',
-        '#5491e6',
+        '#B5F705',
         'deep_wells',
-        '#cb706d',
+        '#F72505',
         'nola_04',
-        '#ffd28a',
+        '#F72505',
         'city_park',
-        '#883399',
+        '#3E5478',
+        'gwm_nola',
+        '#68783E'
 /* other */ '#ccc'
 ]
   }
