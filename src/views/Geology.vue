@@ -58,7 +58,9 @@ const CIRCLE_STYLE = {
         'city_park',
         '#3E5478',
         'gwm_nola',
-        '#68783E'
+        '#68783E',
+        'swm_nola',
+        '#BA0AF9'
 /* other */ '#ccc'
 ]
   }
