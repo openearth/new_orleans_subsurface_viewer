@@ -60,7 +60,7 @@ const CIRCLE_STYLE = {
         'gwm_nola',
         '#68783E',
         'swm_nola',
-        '#BA0AF9'
+        '#BA0AF9',
 /* other */ '#ccc'
 ]
   }
