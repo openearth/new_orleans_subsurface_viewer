@@ -9,6 +9,7 @@ import Monitoring from '@/views/Monitoring';
 import Subsidence from '@/views/Subsidence';
 import Salinisation from '@/views/Salinisation';
 import GreenInfra from '@/views/Green';
+import MonitoringPanel from '@/views/MonitoringPanel';
 import Model from '@/views/Model';
 import Intro from '@/views/Intro';
 
@@ -43,7 +44,10 @@ const routes = [
   {
     path: '/monitoring',
     name: 'monitoring',
-    component: Monitoring
+    components: {
+      default: Monitoring,
+      panel: MonitoringPanel,
+    }
   },
   {
     path: '/subsidence',
