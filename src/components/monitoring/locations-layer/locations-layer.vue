@@ -122,10 +122,11 @@
       onMouseEnter(event) {
         const { features, lngLat } = event;
         const coordinates = features[0].geometry.coordinates.slice();
-        const { loc_id } = features[0].properties;
+        console.log('features[0].properties', features[0].properties);
+        const { long_name } = features[0].properties;
         const content = `<dl>
-          <dt class="text-subtitle-2">Locatie id:</dt>
-          <dd class="text-body-2">${ loc_id }</dd>
+          <dt class="text-subtitle-2">Location name:</dt>
+          <dd class="text-body-2">${ long_name }</dd>
         </dl>`;
 
         // Change the cursor style as a UI indicator.
