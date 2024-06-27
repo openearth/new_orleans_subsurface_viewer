@@ -26,8 +26,10 @@ const featureDetailsRepo = {
 function formatDataIntoLinks(data) {
   // 🐏
   const formatLink = feature => {
+    
     const id = path(['ows:Identifier', '_text'], feature);
-    const url = path(['wps:Data', 'wps:ComplexData', '_cdata'], feature);
+    const url = path(['wps:Data', 'wps:ComplexData', '_text'], feature);
+    
     return {
       id,
       name: formatIdToLabel(id),
@@ -40,7 +42,7 @@ function formatDataIntoLinks(data) {
     val => Array.isArray(val) ? val : [val],
     pathOr([], ['wps:ExecuteResponse', 'wps:ProcessOutputs', 'wps:Output'])
   );
-  // console.log("nnn",buildLinks(data));
+  
   return buildLinks(data);
 }
 
