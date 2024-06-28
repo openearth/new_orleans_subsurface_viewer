@@ -4,12 +4,28 @@
         <template v-slot:default>
           <tbody>
             <tr>
-              <td>Name</td>
+              <td>ID</td>
               <td>{{ id }}</td>
             </tr>
             <tr>
-              <td>Coördinates (EPSG:8744)</td>
-              <td>x: {{ coordinates_rd[0] }} - y: {{ coordinates_rd[1] }}</td>
+              <td>Elevation</td>
+              <td>{{ elevation }}</td>
+            </tr>
+            <tr>
+              <td>Well depth</td>
+              <td>{{ wellDepth }} cm</td>
+            </tr>
+            <tr>
+              <td>Mean highest groundwater level</td>
+              <td>{{ highLevel }} cm</td>
+            </tr>
+            <tr>
+              <td>Mean lowest groundwater level</td>
+              <td>{{ lowLevel }} cm</td>
+            </tr>
+            <tr>
+              <td>Mean groundwater level</td>
+              <td>{{ meanLevel }} cm</td>
             </tr>
           </tbody>
         </template>
@@ -26,10 +42,40 @@
         },
       computed: {
         id() {
-          return this.activeLocation.properties.loc_id;
+          if (this.activeLocation.properties.name) {
+            return this.activeLocation.properties.name;
+          }
+          return "---";
         },
-        coordinates_rd() {
-          return this.activeLocation.geometry_rd.coordinates;
+        elevation() {
+          if (this.activeLocation.properties.z) {
+            return this.activeLocation.properties.z;
+          }
+          return "---";
+        },
+        wellDepth() {
+          if (this.activeLocation.properties.well_depth) {
+            return this.activeLocation.properties.well_depth;
+          }
+          return "---";
+        },
+        highLevel() {
+          if (this.activeLocation.properties.ghg) {
+            return this.activeLocation.properties.ghg;
+          }
+          return "---";
+        },
+        lowLevel() {
+          if (this.activeLocation.properties.glg) {
+            return this.activeLocation.properties.glg;
+          }
+          return "---";
+        },
+        meanLevel() {
+          if (this.activeLocation.properties.ghg && this.activeLocation.properties.glg) {
+            return (this.activeLocation.properties.ghg + this.activeLocation.properties.glg) / 2;
+          }
+          return "---";
         },
       },
     };

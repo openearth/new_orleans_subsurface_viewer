@@ -122,6 +122,7 @@
       onMouseEnter(event) {
         const { features, lngLat } = event;
         const coordinates = features[0].geometry.coordinates.slice();
+        console.log('features[0].properties', features[0].properties);
         const { long_name } = features[0].properties;
         const content = `<dl>
           <dt class="text-subtitle-2">Location name:</dt>

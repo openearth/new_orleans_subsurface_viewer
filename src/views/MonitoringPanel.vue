@@ -8,17 +8,17 @@
         <div class="details d-flex flex-row">
             <div class="details__column">
                 <h3 class="text-h6">
-                    Details well location {{ loc_id }}
+                    {{ locLongName }}
                 </h3>
                 <location-details :active-location="activeLocation" />
                 <v-divider class="my-8" />
-                <level-details 
+                <!-- <level-details 
                     :levels="levels"
                     :active-level="activeLevel"
                     :active-level-id="activeLevelId"
                     :active-location="activeLocation"
                     @change-level="onChangeLevel"
-                    />
+                    /> -->
             </div>
 
             <div class="details__column" style="margin-top: 30px">
@@ -96,7 +96,7 @@
   
 <script>
 import AreaChart from '@/components/monitoring/area-chart/area-chart';
-import LevelDetails from '@/components/monitoring/level-details/level-details';
+// import LevelDetails from '@/components/monitoring/level-details/level-details';
 import LocationDetails from '@/components/monitoring/location-details/location-details';
 import LocationsLayer from '@/components/monitoring/locations-layer/locations-layer';
 import getLocationImages from '@/lib/get-location-images';
@@ -107,7 +107,6 @@ import getTableImages from '@/lib/get-table-images';
 export default {
     components: {
         AreaChart,
-        LevelDetails,
         LocationDetails,
         LocationsLayer,
     },
@@ -128,30 +127,30 @@ export default {
         this.getLocations();
     },
     computed: {
-        levels() {
-            if (!this.activeLocation) {
-                return [];
-            }
+        // levels() {
+        //     if (!this.activeLocation) {
+        //         return [];
+        //     }
 
-            const { filters, loc_id } = this.activeLocation.properties;
-            const splitFilters = filters.toString().split(',');
+        //     const { filters, loc_id } = this.activeLocation.properties;
+        //     const splitFilters = filters.toString().split(',');
 
-            return splitFilters.map((filter) => {
-                let suffix = '';
-                if (filter === '1') {
-                    suffix = ' - Phreatic stage';
-                } else if (filter === '2') {
-                    suffix = ' - 1\u1D49 Watervoerende pakket';
-                } else if (filter === '3') {
-                    suffix = ' - 2\u1D49 Watervoerende pakket';
-                }
+        //     return splitFilters.map((filter) => {
+        //         let suffix = '';
+        //         if (filter === '1') {
+        //             suffix = ' - Phreatic stage';
+        //         } else if (filter === '2') {
+        //             suffix = ' - 1\u1D49 Watervoerende pakket';
+        //         } else if (filter === '3') {
+        //             suffix = ' - 2\u1D49 Watervoerende pakket';
+        //         }
 
-                return {
-                    text: `${loc_id}_${filter}${suffix}`,
-                    value: `${loc_id}_${filter}`,
-                };
-            });
-        },
+        //         return {
+        //             text: `${loc_id}_${filter}${suffix}`,
+        //             value: `${loc_id}_${filter}`,
+        //         };
+        //     });
+        // },
         activeLocation() {
             return this.locations.find(location => location.properties.loc_id === this.activeLocationId);
         },
@@ -161,6 +160,14 @@ export default {
         loc_id() {
             if (this.activeLocation && this.activeLocation.properties) {
                 return this.activeLocation.properties.loc_id;
+            }
+            return null;
+        },
+        locLongName() {
+
+            if (this.activeLocation && this.activeLocation.properties) {
+                console.log('this.activeLocation.properties', this.activeLocation.properties);
+                return this.activeLocation.properties.long_name;
             }
             return null;
         },
