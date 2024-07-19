@@ -164,7 +164,6 @@ export default {
             return null;
         },
         locLongName() {
-
             if (this.activeLocation && this.activeLocation.properties) {
                 console.log('this.activeLocation.properties', this.activeLocation.properties);
                 return this.activeLocation.properties.long_name;
