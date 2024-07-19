@@ -9,7 +9,7 @@
             </tr>
             <tr>
               <td>Elevation</td>
-              <td>{{ elevation }}</td>
+              <td>{{ elevation }} m+NAVD88</td>
             </tr>
             <tr>
               <td>Well depth</td>
