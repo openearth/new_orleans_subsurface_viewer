@@ -92,18 +92,23 @@
         </template>
       </v-dialog>
     </v-sheet>
+    <locations-legend />
   </div>
 </template>
 
 <script>
 
+import LocationsLegend from '@/components/monitoring/locations-legend/locations-legend';
 
 export default {
   data() {
     return {
       dialog: false,
     };
-  }
+  },
+  components: {
+    LocationsLegend
+  },
 };
 </script>
 
