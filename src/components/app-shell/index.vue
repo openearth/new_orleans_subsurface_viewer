@@ -13,7 +13,7 @@
         NO2SV
       </v-toolbar-title>
 
-      <welcome-dialog />
+      <welcome-dialog style="max-width: 1px;"/>
 
       <v-tabs
         background-color="primary"
