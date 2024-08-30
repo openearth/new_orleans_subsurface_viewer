@@ -5,12 +5,6 @@
   import bbox from '@turf/bbox';
 
   // Docs: https://docs.mapbox.com/help/glossary/layout-paint-property/
-  const MARKER_STYLES = {
-    'circle-color': '#fff',
-    'circle-radius': 5,
-    'circle-stroke-width': 5,
-    'circle-stroke-color': '#008fc5',
-  };
 
   const SELECTED_MARKER_STYLES = {
     'circle-color': '#fff',
@@ -95,7 +89,18 @@
           id: 'monitoring-locations',
           type: 'circle',
           source: 'monitoring-locations',
-          paint: MARKER_STYLES,
+          paint: {
+            'circle-radius': 5,
+            'circle-color': '#fff',
+            'circle-stroke-width': 5,
+            'circle-stroke-color': [
+              'match',
+              ['get', 'type_well'],
+              'GWM', '#96613d',
+              'SWM', '#008fc5',
+              '#000000'
+            ]
+          },
         });
       },
       createSelectedLocationSource() {
