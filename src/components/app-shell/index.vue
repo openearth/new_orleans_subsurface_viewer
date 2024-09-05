@@ -100,12 +100,13 @@ export default {
 
   computed: {
     activeFeature() {
+      console.log('mapbox/activeFeature', this.$store.getters['mapbox/activeFeature']);
       return this.$store.getters['mapbox/activeFeature'];
     },
     requestData() {
       return this.$store.getters['mapbox/requestData'];
     },
-     legendLayer() {
+    legendLayer() {
       return this.$store.getters['mapbox/legendLayer'];
     }
   },

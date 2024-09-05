@@ -41,13 +41,12 @@
 
                         <v-tab-item style="margin: 10px">
                             <h3 class="text-h6">
-                                Boorgatmeting van meetlocatie {{ loc_id }} <br>
-                                <div class="location-details__images" v-if="images.length">
-                                    <a v-for="image in images" :key="image" :href="image" target="_blank"
-                                        title="Open afbeelding in nieuw tabblad">
-                                        <v-img :lazy-src="image" max-width="700" :src="image" alt="" />
-                                    </a>
-                                </div>
+                                Bore log of location {{ name }} <br>
+                                <!-- TODO: implement this component below -->
+                                <!-- <feature-details
+                                    v-if="!!activeFeature"
+                                    :feature="activeFeature"
+                                /> -->
                             </h3>
                         </v-tab-item>
 
@@ -99,20 +98,20 @@ import AreaChart from '@/components/monitoring/area-chart/area-chart';
 // import LevelDetails from '@/components/monitoring/level-details/level-details';
 import LocationDetails from '@/components/monitoring/location-details/location-details';
 import LocationsLayer from '@/components/monitoring/locations-layer/locations-layer';
-import getLocationImages from '@/lib/get-location-images';
 import getLocationsData from '@/lib/get-locations-data';
 import getLevelData from '@/lib/get-level-data';
 import getTableImages from '@/lib/get-table-images';
+// import FeatureDetails from '@/components/feature-details';
 
 export default {
     components: {
         AreaChart,
         LocationDetails,
         LocationsLayer,
+        // FeatureDetails
     },
     data() {
         return {
-            images: [],
             tables: [],
             panelIsCollapsed: true,
 
@@ -127,30 +126,6 @@ export default {
         this.getLocations();
     },
     computed: {
-        // levels() {
-        //     if (!this.activeLocation) {
-        //         return [];
-        //     }
-
-        //     const { filters, loc_id } = this.activeLocation.properties;
-        //     const splitFilters = filters.toString().split(',');
-
-        //     return splitFilters.map((filter) => {
-        //         let suffix = '';
-        //         if (filter === '1') {
-        //             suffix = ' - Phreatic stage';
-        //         } else if (filter === '2') {
-        //             suffix = ' - 1\u1D49 Watervoerende pakket';
-        //         } else if (filter === '3') {
-        //             suffix = ' - 2\u1D49 Watervoerende pakket';
-        //         }
-
-        //         return {
-        //             text: `${loc_id}_${filter}${suffix}`,
-        //             value: `${loc_id}_${filter}`,
-        //         };
-        //     });
-        // },
         activeLocation() {
             return this.locations.find(location => location.properties.loc_id === this.activeLocationId);
         },
@@ -163,8 +138,15 @@ export default {
             }
             return null;
         },
+        name() {
+            if (this.activeLocation && this.activeLocation.properties) {
+                return this.activeLocation.properties.name;
+            }
+            return null;
+        },
         locLongName() {
             if (this.activeLocation && this.activeLocation.properties) {
+                console.log('this.activeLocation', this.activeLocation);
                 console.log('this.activeLocation.properties', this.activeLocation.properties);
                 return this.activeLocation.properties.long_name;
             }
@@ -190,6 +172,10 @@ export default {
 
             return [...groupedByDate.values()].sort((a, b) => a.dateObj - b.dateObj);
         },
+        // activeFeature() {
+        //     console.log('mapbox/activeFeature', this.$store.getters['mapbox/activeFeature']);
+        //     return this.$store.getters['mapbox/activeFeature'];
+        // },
     },
     methods: {
         reset() {
@@ -230,11 +216,6 @@ export default {
     watch: {
         activeLocation(location) {
             this.reset();
-
-            if (location) {
-                getLocationImages({ id: location.properties.loc_id })
-                    .then((images) => this.images = images);
-            }
             if (location) {
                 getTableImages({ id: location.properties.loc_id })
                     .then((tables) => this.tables = tables);
@@ -295,12 +276,6 @@ export default {
 
     .details__column:last-child {
         flex: 1 1 auto;
-    }
-
-    .location-details__images {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 32px;
     }
 
     .data-table__cell {
