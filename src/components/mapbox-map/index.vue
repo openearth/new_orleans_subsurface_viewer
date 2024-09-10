@@ -95,10 +95,11 @@ export default {
       var features = this.$root.map.queryRenderedFeatures(e.point, { layers: [e.features[0].layer.source] });
       var feature = features[0];
       const layerId = feature.layer.id;
-      const { uid } = feature.properties;
+      const { uid, code } = feature.properties;
       this.$store.commit('mapbox/SET_ACTIVE_FEATURE', {
         layerId,
-        uid
+        uid,
+        code
       });
     }
   }

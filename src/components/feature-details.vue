@@ -5,7 +5,7 @@
   >
     <v-toolbar dense flat>
       <v-toolbar-title>
-        {{ feature.uid }}
+        {{ feature.code }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
