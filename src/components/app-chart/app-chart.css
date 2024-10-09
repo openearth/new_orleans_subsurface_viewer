@@ -1,0 +1,13 @@
+.app-chart,
+.app-chart__container {
+  width: 100%;
+  height: 100%;
+}
+
+.app-chart__loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 400px;
+}
