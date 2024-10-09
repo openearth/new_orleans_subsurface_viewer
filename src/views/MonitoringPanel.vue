@@ -38,9 +38,7 @@
 
             <v-tab-item style="margin: 10px">
               <h3 v-if="!activeLevel" class="text-h6">
-                Er is geen peilfilter geselecteerd, kies 'Selecteer peilfilter
-                op deze meetlocatie' <br />
-                <v-icon color="black" size="48">mdi-arrow-bottom-left</v-icon>
+                Coming soon <br />
               </h3>
               <h3 v-if="activeLevel" class="text-h6">
                 Tijdreeks voor {{ id }}
@@ -63,9 +61,7 @@
 
             <v-tab-item style="margin: 10px">
               <h3 v-if="!activeLevel" class="text-h6">
-                Er is geen peilfilter geselecteerd, kies 'Selecteer peilfilter
-                op deze meetlocatie' <br />
-                <v-icon color="black" size="48">mdi-arrow-bottom-left</v-icon>
+                Coming soon <br />
               </h3>
               <h3 v-else class="text-h6">
                 Informatie van {{ id }}
