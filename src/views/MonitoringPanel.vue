@@ -32,7 +32,7 @@
       <div class="details__column" style="margin-top: 30px">
         <v-card>
           <v-tabs background-color="primary" center-active dark>
-            <v-tab>ground water head</v-tab>
+            <v-tab>water level</v-tab>
             <v-tab>geology</v-tab>
             <v-tab>field measurement</v-tab>
 
