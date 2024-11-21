@@ -10,7 +10,7 @@
 
     <v-img
       class="title text-center"
-      src="~@/assets/img/intro_pic2.png"
+      src="~@/assets/img/background_photo.jpg"
 
       height="100vh"
     >
