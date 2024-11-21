@@ -40,7 +40,7 @@
               <h3 v-if="!activeLevel" class="text-h6">
                 Coming soon <br />
               </h3>
-              <h3 v-if="activeLevel" class="text-h6">
+              <h3 v-if="!!activeLevel" class="text-h6">
                 Tijdreeks voor {{ id }}
               </h3>
               <area-chart
@@ -138,6 +138,7 @@ export default {
   },
   created() {
     this.getLocations();
+    
   },
   computed: {
     activeLocation() {
@@ -162,11 +163,6 @@ export default {
     },
     locLongName() {
       if (this.activeLocation && this.activeLocation.properties) {
-        console.log("this.activeLocation", this.activeLocation);
-        console.log(
-          "this.activeLocation.properties",
-          this.activeLocation.properties
-        );
         return this.activeLocation.properties.long_name;
       }
       return null;
@@ -198,12 +194,13 @@ export default {
           layerId: "boreholes", //TODO remove hard-coded layerId
           uid: this.activeLocation.properties.borelogs_id,
         };
-        console.log(activeFeature);
         return activeFeature;
       }
       return null;
-    },
+    }
+
   },
+
   methods: {
     reset() {
       this.activeLevel = null;
@@ -223,6 +220,7 @@ export default {
       this.getLevel({
         id,
       });
+      console.log(this.activeLevel.timeseries)
     },
 
     getLocations() {
@@ -233,10 +231,15 @@ export default {
         .catch((err) => Promise.reject(err));
     },
 
-    getLevel({ id }) {
-      return getLevelData({ id }).then((activeLevel) => {
-        this.activeLevel = activeLevel;
-      });
+    getLevel({ props }) {
+      
+      if (props) {
+        console.log("getLevel id", props.name)
+        const well_types = {"GWM": "Groundwaterlevel", "SWM": 'Surfacewaterlevel'}
+      return getLevelData({ id: props.name, well_type:well_types[props.type_well]}).then((activeLevel) => {
+        this.activeLevel = activeLevel ;
+      })}
+      return this.activeLevel = null
     },
   },
   watch: {
@@ -246,6 +249,8 @@ export default {
         getTableImages({ id: location.properties.loc_id }).then(
           (tables) => (this.tables = tables)
         );
+        console.log("location props", location.properties)
+        this.getLevel({props:location.properties})
       }
     },
   },
