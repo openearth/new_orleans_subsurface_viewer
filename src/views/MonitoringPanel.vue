@@ -25,7 +25,7 @@
         <v-card>
           <v-tabs background-color="primary" center-active dark>
             <v-tab>water level</v-tab>
-            <template v-if="activeLocation.properties.type_well == 'GWM'">
+            <template v-if="wellType == 'GWM'">
               <v-tab>geology</v-tab>
             </template>
             <v-tab>field measurement</v-tab>
@@ -41,7 +41,7 @@
                 :well_type="activeLevel.well_type" />
             </v-tab-item>
 
-            <template v-if="activeLocation.properties.type_well == 'GWM'">
+            <template v-if="wellType == 'GWM'">
               <v-tab-item style="margin: 10px">
                 <h3 class="text-h6">Bore log of location {{ name }} <br /></h3>
                 <feature-details class="graph-borehole-subtab" v-if="!!activeFeature" :feature="activeFeature" />
@@ -126,6 +126,12 @@ export default {
       return this.locations.find(
         (location) => location.properties.loc_id === this.activeLocationId
       );
+    },
+    wellType() {
+      if (this.activeLocation && this.activeLocation.properties){
+        return this.activeLocation.properties.type_well
+      }
+      return null
     },
     id() {
       return this.activeLevel.properties.locationid;
