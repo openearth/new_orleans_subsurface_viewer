@@ -62,15 +62,15 @@
                       <tr>
                         <th class="data-table__cell">Date</th>
                         <th class="data-table__cell data-table__cell--align-right">
-                          {{ activeLevel.parameters.parameter }} [{{
-                            activeLevel.parameters.unit
+                          {{ECdataParameter}} [{{
+                            ECDataUnit
                           }}]
                         </th>
                       </tr>
                       <tr v-for="item in tableData" :key="item.date">
                         <td class="data-table__cell">{{ item.date }}</td>
                         <td class="data-table__cell data-table__cell--align-right">
-                          {{ item[activeLevel.parameters.parameter] }}
+                          {{ item[ECdataParameter] }}
                         </td>
                       </tr>
                     </tbody>
@@ -90,7 +90,7 @@
 
 <script>
 import AreaChart from "@/components/monitoring/area-chart/area-chart";
-// import LevelDetails from '@/components/monitoring/level-details/level-details';
+import getECData from "@/lib/get-ec-data";
 import LocationDetails from "@/components/monitoring/location-details/location-details";
 import LocationsLayer from "@/components/monitoring/locations-layer/locations-layer";
 import getLocationsData from "@/lib/get-locations-data";
@@ -115,6 +115,7 @@ export default {
 
       activeLevel: null,
       activeLevelId: null,
+      ECData: null
     };
   },
   created() {
@@ -128,8 +129,20 @@ export default {
       );
     },
     wellType() {
-      if (this.activeLocation && this.activeLocation.properties){
+      if (this.activeLocation && this.activeLocation.properties) {
         return this.activeLocation.properties.type_well
+      }
+      return null
+    },
+    ECdataParameter() {
+      if (this.ECData){
+        return this.ECData.parameters.parameter
+      }
+      return null
+    },
+    ECDataUnit(){
+      if (this.ECData){
+        return this.ECData.parameters.unit
       }
       return null
     },
@@ -155,24 +168,28 @@ export default {
       return null;
     },
     tableData() {
-      const parameter = this.activeLevel.parameters.parameter;
 
-      const groupedByDate = new Map();
+      if (this.ECData) {
+        const parameter = this.ECData.parameters.parameter;
 
-      this.activeLevel.timeseries.forEach(({ date, dateObj, head }) => {
-        if (groupedByDate.has(date)) {
-          groupedByDate.get(date)[parameter] = head;
-          return;
-        }
+        const groupedByDate = new Map();
 
-        groupedByDate.set(date, {
-          date,
-          dateObj,
-          [parameter]: head,
+        this.ECData.timeseries.forEach(({ date, dateObj, head }) => {
+          if (groupedByDate.has(date)) {
+            groupedByDate.get(date)[parameter] = head;
+            return;
+          }
+
+          groupedByDate.set(date, {
+            date,
+            dateObj,
+            [parameter]: head,
+          });
         });
-      });
 
-      return [...groupedByDate.values()].sort((a, b) => a.dateObj - b.dateObj);
+        return [...groupedByDate.values()].sort((a, b) => a.dateObj - b.dateObj);
+      }
+      return null
     },
 
     activeFeature() {
@@ -223,11 +240,21 @@ export default {
       if (props) {
         return getLevelData({ id: props.name, well_type: "Groundwaterlevel" }).then((activeLevel) => {
           activeLevel.well_type = props.type_well
-          this.activeLevel = activeLevel;
+          this.activeLevel = activeLevel
         })
       }
       return this.activeLevel = null
     },
+    getEC({ props }) {
+      if (props) {
+        return getECData({ id: props.name }).then((ec_data) => {
+          this.ECData = ec_data
+        })
+
+      }
+      return this.ECData = null
+    }
+
   },
   watch: {
     activeLocation(location) {
@@ -238,6 +265,7 @@ export default {
         );
         console.log("location props", location.properties)
         this.getLevel({ props: location.properties })
+        this.getEC({ props: location.properties })
       }
     },
   },
