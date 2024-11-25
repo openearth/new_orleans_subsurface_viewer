@@ -41,12 +41,13 @@
                 Coming soon <br />
               </h3>
               <h3 v-if="!!activeLevel" class="text-h6">
-                Tijdreeks voor {{ id }}
+                Timeseries for {{ id }}
               </h3>
               <area-chart
                 v-if="activeLevel"
                 :timeseries="activeLevel.timeseries"
                 :statistics="activeLevel.statistics"
+                :well_type= "activeLevel.well_type"
               />
             </v-tab-item>
 
@@ -64,7 +65,7 @@
                 Coming soon <br />
               </h3>
               <h3 v-else class="text-h6">
-                Informatie van {{ id }}
+                Information of {{ id }}
                 <br />
                 <br />
                 <v-card elevation="5">
@@ -234,9 +235,8 @@ export default {
     getLevel({ props }) {
       
       if (props) {
-        console.log("getLevel id", props.name)
-        const well_types = {"GWM": "Groundwaterlevel", "SWM": 'Surfacewaterlevel'}
-      return getLevelData({ id: props.name, well_type:well_types[props.type_well]}).then((activeLevel) => {
+      return getLevelData({ id: props.name, well_type: "Groundwaterlevel"}).then((activeLevel) => {        
+        activeLevel.well_type = props.type_well
         this.activeLevel = activeLevel ;
       })}
       return this.activeLevel = null
