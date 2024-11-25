@@ -123,7 +123,7 @@
         yAxis() {
           return {
             boundaryGap: [ 0, '100%' ],
-            name: `ft + ${this.elevationSuffix}`,
+            name: `m + ${this.elevationSuffix}`,
             type: 'value',
             nameLocation: 'end',
             nameTextStyle: {
@@ -208,7 +208,7 @@
                 },
                 symbol: [ 'none', 'none' ],
               },
-              name: `ground water level ft + ${this.elevationSuffix}`,
+              name: `ground water level m + ${this.elevationSuffix}`,
               sampling: 'lttb',
               type: 'line',
             },

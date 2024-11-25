@@ -9,24 +9,14 @@
             </tr>
             <tr>
               <td>Elevation</td>
-              <td>{{ elevation }} m+NAVD88</td>
+              <td>{{ elevation }}</td>
             </tr>
+            <template v-if="activeLocation.properties.type_well == 'GWM'">
             <tr>
               <td>Well depth</td>
               <td>{{ wellDepth }} cm</td>
             </tr>
-            <tr>
-              <td>Mean highest groundwater level</td>
-              <td>{{ highLevel }} cm</td>
-            </tr>
-            <tr>
-              <td>Mean lowest groundwater level</td>
-              <td>{{ lowLevel }} cm</td>
-            </tr>
-            <tr>
-              <td>Mean groundwater level</td>
-              <td>{{ meanLevel }} cm</td>
-            </tr>
+          </template>
           </tbody>
         </template>
       </v-simple-table>
@@ -49,7 +39,12 @@
         },
         elevation() {
           if (this.activeLocation.properties.z) {
-            return this.activeLocation.properties.z;
+            if (this.activeLocation.properties.type_well == "GWM"){
+              return this.activeLocation.properties.z + " m + NAVD88";
+            }
+            if (this.activeLocation.properties.type_well == "SWM"){
+              return this.activeLocation.properties.z + "m + sensor"
+            }
           }
           return "---";
         },

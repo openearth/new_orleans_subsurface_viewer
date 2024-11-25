@@ -1,15 +1,7 @@
 <template>
-  <div
-    class="monitoring-panel"
-    :class="{ 'monitoring-panel--collapsed': panelIsCollapsed }"
-  >
-    <v-btn
-      v-if="!panelIsCollapsed"
-      class="monitoring-panel__minimize"
-      icon
-      title="Minimaliseer"
-      @click="onClickCollapse"
-    >
+  <div class="monitoring-panel" :class="{ 'monitoring-panel--collapsed': panelIsCollapsed }">
+    <v-btn v-if="!panelIsCollapsed" class="monitoring-panel__minimize" icon title="Minimaliseer"
+      @click="onClickCollapse">
       <v-icon>mdi-chevron-down</v-icon>
     </v-btn>
 
@@ -33,32 +25,28 @@
         <v-card>
           <v-tabs background-color="primary" center-active dark>
             <v-tab>water level</v-tab>
-            <v-tab>geology</v-tab>
+            <template v-if="activeLocation.properties.type_well == 'GWM'">
+              <v-tab>geology</v-tab>
+            </template>
             <v-tab>field measurement</v-tab>
 
             <v-tab-item style="margin: 10px">
               <h3 v-if="!activeLevel" class="text-h6">
-                Coming soon <br />
+                Timeseries not available <br />
               </h3>
               <h3 v-if="!!activeLevel" class="text-h6">
                 Timeseries for {{ id }}
               </h3>
-              <area-chart
-                v-if="activeLevel"
-                :timeseries="activeLevel.timeseries"
-                :statistics="activeLevel.statistics"
-                :well_type= "activeLevel.well_type"
-              />
+              <area-chart v-if="activeLevel" :timeseries="activeLevel.timeseries" :statistics="activeLevel.statistics"
+                :well_type="activeLevel.well_type" />
             </v-tab-item>
 
-            <v-tab-item style="margin: 10px">
-              <h3 class="text-h6">Bore log of location {{ name }} <br /></h3>
-              <feature-details
-                class="graph-borehole-subtab"
-                v-if="!!activeFeature"
-                :feature="activeFeature"
-              />
-            </v-tab-item>
+            <template v-if="activeLocation.properties.type_well == 'GWM'">
+              <v-tab-item style="margin: 10px">
+                <h3 class="text-h6">Bore log of location {{ name }} <br /></h3>
+                <feature-details class="graph-borehole-subtab" v-if="!!activeFeature" :feature="activeFeature" />
+              </v-tab-item>
+            </template>
 
             <v-tab-item style="margin: 10px">
               <h3 v-if="!activeLevel" class="text-h6">
@@ -73,9 +61,7 @@
                     <tbody>
                       <tr>
                         <th class="data-table__cell">Date</th>
-                        <th
-                          class="data-table__cell data-table__cell--align-right"
-                        >
+                        <th class="data-table__cell data-table__cell--align-right">
                           {{ activeLevel.parameters.parameter }} [{{
                             activeLevel.parameters.unit
                           }}]
@@ -83,9 +69,7 @@
                       </tr>
                       <tr v-for="item in tableData" :key="item.date">
                         <td class="data-table__cell">{{ item.date }}</td>
-                        <td
-                          class="data-table__cell data-table__cell--align-right"
-                        >
+                        <td class="data-table__cell data-table__cell--align-right">
                           {{ item[activeLevel.parameters.parameter] }}
                         </td>
                       </tr>
@@ -99,12 +83,8 @@
       </div>
     </div>
 
-    <locations-layer
-      v-if="locations.length"
-      :locations="locations"
-      :active-location="activeLocation"
-      @click-marker="onClickMarker"
-    />
+    <locations-layer v-if="locations.length" :locations="locations" :active-location="activeLocation"
+      @click-marker="onClickMarker" />
   </div>
 </template>
 
@@ -139,7 +119,7 @@ export default {
   },
   created() {
     this.getLocations();
-    
+
   },
   computed: {
     activeLocation() {
@@ -233,12 +213,13 @@ export default {
     },
 
     getLevel({ props }) {
-      
+
       if (props) {
-      return getLevelData({ id: props.name, well_type: "Groundwaterlevel"}).then((activeLevel) => {        
-        activeLevel.well_type = props.type_well
-        this.activeLevel = activeLevel ;
-      })}
+        return getLevelData({ id: props.name, well_type: "Groundwaterlevel" }).then((activeLevel) => {
+          activeLevel.well_type = props.type_well
+          this.activeLevel = activeLevel;
+        })
+      }
       return this.activeLevel = null
     },
   },
@@ -250,7 +231,7 @@ export default {
           (tables) => (this.tables = tables)
         );
         console.log("location props", location.properties)
-        this.getLevel({props:location.properties})
+        this.getLevel({ props: location.properties })
       }
     },
   },
