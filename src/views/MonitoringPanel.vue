@@ -50,7 +50,7 @@
 
             <v-tab-item style="margin: 10px">
               <h3 v-if="!activeLevel" class="text-h6">
-                Coming soon <br />
+                Not available <br />
               </h3>
               <h3 v-else class="text-h6">
                 Information of {{ id }}

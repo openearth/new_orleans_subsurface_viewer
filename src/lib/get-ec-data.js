@@ -18,7 +18,7 @@ export default async function getECData({ id }) {
     service: "WPS",
     identifier: "monitoring_timeseries",
     version: "1.0.0",
-    datainputs: `locationinfo=%7b%22locid%22:%22${id}%22,%22parameter%22:%22Electrical%20Conductivity:Handmeasurement%22%7d`,
+    datainputs: `locationinfo=%7b"locid":"${id}","parameter":"Electrical%20Conductivity:%20Handmeasurement"%7d`,
     
   });
   console.log("url", url)
