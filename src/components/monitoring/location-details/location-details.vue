@@ -51,7 +51,6 @@
         },
       computed: {
         id() {
-          console.log("activelocation:",this.activeLocation)
           if (this.activeLocation.properties.name) {
             return this.activeLocation.properties.name;
           }
