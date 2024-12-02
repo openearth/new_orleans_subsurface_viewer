@@ -17,6 +17,25 @@
               <td>{{ wellDepth }} cm</td>
             </tr>
           </template>
+          <template v-if="highLevel">
+            <tr>
+              <td>High level</td>
+              <td>{{ highLevel }}</td>
+            </tr>
+          </template>
+          <template v-if="lowLevel">
+            <tr>
+              <td>Low level</td>
+              <td>{{ lowLevel }}</td>
+            </tr>
+          </template>
+          <template v-if="meanLevel">
+            <tr>
+              <td>Mean level</td>
+              <td>{{ meanLevel }}</td>
+            </tr>
+          </template>
+
           </tbody>
         </template>
       </v-simple-table>
@@ -32,6 +51,7 @@
         },
       computed: {
         id() {
+          console.log("activelocation:",this.activeLocation)
           if (this.activeLocation.properties.name) {
             return this.activeLocation.properties.name;
           }
@@ -58,19 +78,19 @@
           if (this.activeLocation.properties.ghg) {
             return this.activeLocation.properties.ghg;
           }
-          return "---";
+          return null;
         },
         lowLevel() {
           if (this.activeLocation.properties.glg) {
             return this.activeLocation.properties.glg;
           }
-          return "---";
+          return null;
         },
         meanLevel() {
           if (this.activeLocation.properties.ghg && this.activeLocation.properties.glg) {
             return (this.activeLocation.properties.ghg + this.activeLocation.properties.glg) / 2;
           }
-          return "---";
+          return null;
         },
       },
     };
