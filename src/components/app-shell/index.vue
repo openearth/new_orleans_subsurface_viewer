@@ -1,7 +1,8 @@
 <template>
   <v-app>
     <sidebar />
-
+    <router-view name="panel" />
+    
     <v-app-bar
       class="app-header"
       app
@@ -12,7 +13,7 @@
         NO2SV
       </v-toolbar-title>
 
-      <welcome-dialog />
+      <welcome-dialog style="max-width: 1px;"/>
 
       <v-tabs
         background-color="primary"
@@ -65,6 +66,7 @@
         v-if="!!requestData"
         :feature="requestData"
       />
+      
     </v-content>
 
 
@@ -98,12 +100,13 @@ export default {
 
   computed: {
     activeFeature() {
+      console.log('mapbox/activeFeature', this.$store.getters['mapbox/activeFeature']);
       return this.$store.getters['mapbox/activeFeature'];
     },
     requestData() {
       return this.$store.getters['mapbox/requestData'];
     },
-     legendLayer() {
+    legendLayer() {
       return this.$store.getters['mapbox/legendLayer'];
     }
   },
