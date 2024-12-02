@@ -20,19 +20,19 @@
           <template v-if="highLevel">
             <tr>
               <td>High level</td>
-              <td>{{ highLevel }}</td>
+              <td>{{ highLevel }} cm</td>
             </tr>
           </template>
           <template v-if="lowLevel">
             <tr>
               <td>Low level</td>
-              <td>{{ lowLevel }}</td>
+              <td>{{ lowLevel }} cm</td>
             </tr>
           </template>
           <template v-if="meanLevel">
             <tr>
               <td>Mean level</td>
-              <td>{{ meanLevel }}</td>
+              <td>{{ meanLevel }} cm</td>
             </tr>
           </template>
 
@@ -62,7 +62,7 @@
               return this.activeLocation.properties.z + " m + NAVD88";
             }
             if (this.activeLocation.properties.type_well == "SWM"){
-              return this.activeLocation.properties.z + "m + sensor"
+              return this.activeLocation.properties.z + "m + sensor";
             }
           }
           return "---";
