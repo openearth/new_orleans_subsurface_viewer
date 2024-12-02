@@ -72,14 +72,14 @@
       computed: {
 
         elevationSuffix (){
-          console.log(this.well_type)
+          console.log(this.well_type);
           if (this.well_type == "GWM"){
-            return "NAVD88"
+            return "NAVD88";
           }
           else if (this.well_type == "SWM") {
-            return "sensor"
+            return "sensor";
           }
-          return null
+          return null;
         },
 
         baseOptions() {
@@ -99,9 +99,9 @@
               trigger: 'axis',
             },
             grid: {
-              top: '50px',
+              top: '25px',
               right: '40px',
-              bottom: '10px',
+              bottom: '60px',
               left: '16px',
               containLabel: true,
               backgroundColor: '#fff',
