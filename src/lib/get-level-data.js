@@ -8,21 +8,22 @@ import xmlToJson from '@/lib/xml-to-json';
  * @param {string} id - The PH id.
  * @returns {Promise} - An object with PH data.
  */
-export default async function getLevelData ({ id }) {
+export default async function getLevelData ({ id, well_type}) {
   const url = buildGeoServerUrl({
     url: 'https://new-orleans.openearth.eu/wps',
     request: 'execute',
     service: 'WPS',
+    identifier: 'monitoring_timeseries',
     version: '1.0.0',
-    Identifier: 'monitoring_timeseries',
-    datainputs: `loc_id=${ id }`,
+    datainputs: `locationinfo=%7b%22locid%22:%22${id}%22,%22parameter%22:%22${well_type}%22%7d`,
+  
   });
 
   return fetch(url)
     .then(response => response.text())
     .then(string => {
       const rawData = xmlToJson(string);
-
+      if (rawData){
       const value = {
         parameters: rawData.parameterproperties,
         properties: rawData.locationproperties,
@@ -35,6 +36,6 @@ export default async function getLevelData ({ id }) {
       }
 
       return value ? value : null;
-    })
+}})
     .catch(err => Promise.reject(err));
 }

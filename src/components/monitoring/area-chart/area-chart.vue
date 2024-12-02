@@ -4,7 +4,7 @@
         <v-responsive
           class="scroll-x"
           :min-height="0"
-          :style="{ 'overflow-x': 'auto' }"
+          :style="{ 'overflow-x': 'auto'}"
         >
           <v-chart
             :init-options="initOptions"
@@ -50,7 +50,7 @@
       },
       data() {
         return {
-          initOptions: { height: '1000px', width: '1200px' },
+          initOptions: {height: "230px", width: "1200px"},
         };
       },
       props: {
@@ -58,13 +58,30 @@
             type: Array,
         },
         statistics: {
-            type: Array,
+            type: Object,
+        },
+        well_type: {
+          type: String,
+
         }
+
       },
-      mounted() {
-        this.setChartHeight();
-      },
+      // mounted() {
+      //   this.setChartHeight();
+      // },
       computed: {
+
+        elevationSuffix (){
+          console.log(this.well_type);
+          if (this.well_type == "GWM"){
+            return "NAVD88";
+          }
+          else if (this.well_type == "SWM") {
+            return "sensor";
+          }
+          return null;
+        },
+
         baseOptions() {
           return {
             dataZoom: [
@@ -82,9 +99,9 @@
               trigger: 'axis',
             },
             grid: {
-              top: '50px',
+              top: '25px',
               right: '40px',
-              bottom: '10px',
+              bottom: '60px',
               left: '16px',
               containLabel: true,
               backgroundColor: '#fff',
@@ -106,7 +123,7 @@
         yAxis() {
           return {
             boundaryGap: [ 0, '100%' ],
-            name: 'ft + NAVD88',
+            name: `m + ${this.elevationSuffix}`,
             type: 'value',
             nameLocation: 'end',
             nameTextStyle: {
@@ -191,7 +208,7 @@
                 },
                 symbol: [ 'none', 'none' ],
               },
-              name: 'ground water head ft + NAVD88',
+              name: `ground water level m + ${this.elevationSuffix}`,
               sampling: 'lttb',
               type: 'line',
             },
