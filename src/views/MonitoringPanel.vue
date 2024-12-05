@@ -8,7 +8,7 @@
     <div class="details d-flex flex-row">
       <div class="details__column">
         <h3 class="text-h6">
-          {{ locLongName }}
+          {{ name }}
         </h3>
         <location-details :active-location="activeLocation" />
         <v-divider class="my-8" />
@@ -35,7 +35,7 @@
                 Timeseries not available <br />
               </h3>
               <h3 v-if="!!activeLevel" class="text-h6">
-                Timeseries for {{ id }}
+                Timeseries for {{ name }}
               </h3>
               <area-chart v-if="activeLevel" :timeseries="activeLevel.timeseries" :statistics="activeLevel.statistics"
                 :well_type="activeLevel.well_type" />
@@ -53,7 +53,7 @@
                 Not available <br />
               </h3>
               <h3 v-else class="text-h6">
-                Information of {{ id }}
+                Information of {{ name }}
                 <br />
                 <br />
                 <v-card elevation="5">
@@ -157,7 +157,16 @@ export default {
     },
     name() {
       if (this.activeLocation && this.activeLocation.properties) {
-        return this.activeLocation.properties.name;
+        const well_depth_identifier = this.activeLocation.properties.name.slice(-1)
+        console.log(well_depth_identifier)
+        if (well_depth_identifier == "1") {
+          return this.activeLocation.properties.long_name.concat(" ", "(shallow well)")
+        }
+        if (well_depth_identifier == "2") {
+          return this.activeLocation.properties.long_name.concat(" ", "(deep well)")
+        }
+        
+        return this.activeLocation.properties.long_name;
       }
       return null;
     },
