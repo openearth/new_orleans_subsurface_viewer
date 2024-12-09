@@ -8,7 +8,7 @@
     <div class="details d-flex flex-row">
       <div class="details__column">
         <h3 class="text-h6">
-          {{ locLongName }}
+          {{ name }}
         </h3>
         <location-details :active-location="activeLocation" />
         <v-divider class="my-8" />
@@ -35,7 +35,7 @@
                 Timeseries not available <br />
               </h3>
               <h3 v-if="!!activeLevel" class="text-h6">
-                Timeseries for {{ id }}
+                Timeseries for {{ name }}
               </h3>
               <area-chart v-if="activeLevel" :timeseries="activeLevel.timeseries" :statistics="activeLevel.statistics"
                 :well_type="activeLevel.well_type" />
@@ -53,7 +53,7 @@
                 Not available <br />
               </h3>
               <h3 v-else class="text-h6">
-                Information of {{ id }}
+                Information of {{ name }}
                 <br />
                 <br />
                 <v-card elevation="5">
@@ -130,21 +130,21 @@ export default {
     },
     wellType() {
       if (this.activeLocation && this.activeLocation.properties) {
-        return this.activeLocation.properties.type_well
+        return this.activeLocation.properties.type_well;
       }
-      return null
+      return null;
     },
     ECdataParameter() {
       if (this.ECData){
-        return this.ECData.parameters.parameter
+        return this.ECData.parameters.parameter;
       }
-      return null
+      return null;
     },
     ECDataUnit(){
       if (this.ECData){
-        return this.ECData.parameters.unit
+        return this.ECData.parameters.unit;
       }
-      return null
+      return null;
     },
     id() {
       return this.activeLevel.properties.locationid;
@@ -157,7 +157,21 @@ export default {
     },
     name() {
       if (this.activeLocation && this.activeLocation.properties) {
-        return this.activeLocation.properties.name;
+        if (this.wellType == 'SWM') {
+          return this.activeLocation.properties.long_name;
+        }
+        if (this.wellType == 'GWM') {
+          const well_depth_identifier = this.activeLocation.properties.name.slice(-1);
+          console.log(well_depth_identifier);
+          if (well_depth_identifier == "1") {
+            return this.activeLocation.properties.long_name.concat(" ", "(shallow well)");
+          }
+          if (well_depth_identifier == "2") {
+            return this.activeLocation.properties.long_name.concat(" ", "(deep well)");
+          }
+          
+          return this.activeLocation.properties.long_name;
+        }
       }
       return null;
     },
@@ -189,7 +203,7 @@ export default {
 
         return [...groupedByDate.values()].sort((a, b) => a.dateObj - b.dateObj);
       }
-      return null
+      return null;
     },
 
     activeFeature() {
@@ -224,7 +238,7 @@ export default {
       this.getLevel({
         id,
       });
-      console.log(this.activeLevel.timeseries)
+      console.log(this.activeLevel.timeseries);
     },
 
     getLocations() {
@@ -239,20 +253,20 @@ export default {
 
       if (props) {
         return getLevelData({ id: props.name, well_type: "Groundwaterlevel" }).then((activeLevel) => {
-          activeLevel.well_type = props.type_well
-          this.activeLevel = activeLevel
-        })
+          activeLevel.well_type = props.type_well;
+          this.activeLevel = activeLevel;
+        });
       }
-      return this.activeLevel = null
+      return this.activeLevel = null;
     },
     getEC({ props }) {
       if (props) {
         return getECData({ id: props.name }).then((ec_data) => {
-          this.ECData = ec_data
-        })
+          this.ECData = ec_data;
+        });
 
       }
-      return this.ECData = null
+      return this.ECData = null;
     }
 
   },
@@ -263,9 +277,9 @@ export default {
         getTableImages({ id: location.properties.loc_id }).then(
           (tables) => (this.tables = tables)
         );
-        console.log("location props", location.properties)
-        this.getLevel({ props: location.properties })
-        this.getEC({ props: location.properties })
+        console.log("location props", location.properties);
+        this.getLevel({ props: location.properties });
+        this.getEC({ props: location.properties });
       }
     },
   },
