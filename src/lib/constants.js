@@ -9,7 +9,7 @@ export const MAP_CENTER = [
 ];
 
 export const MAP_ZOOM = 11;
-export const MAX_MAP_ZOOM = 15.5;
+export const MAX_MAP_ZOOM = 17;
 
 export const MAP_BASELAYERS = [
   'light',
