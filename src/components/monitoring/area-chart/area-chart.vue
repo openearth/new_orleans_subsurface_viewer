@@ -99,7 +99,7 @@
               trigger: 'axis',
             },
             grid: {
-              top: '25px',
+              top: '35px',
               right: '40px',
               bottom: '60px',
               left: '16px',
