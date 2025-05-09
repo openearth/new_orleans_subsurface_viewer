@@ -37,7 +37,7 @@
         <v-tab :to="{ name: 'monitoring' }">
           Monitoring
         </v-tab>
-        <v-tab :to="{ name: 'subsidence' }">
+        <!-- <v-tab :to="{ name: 'subsidence' }">
           Subsidence
         </v-tab>
         <v-tab :to="{ name: 'salinisation' }">
@@ -45,7 +45,7 @@
         </v-tab>
         <v-tab :to="{ name: 'green' }">
           Green Infra
-        </v-tab>
+        </v-tab> -->
         <v-tab :to="{ name: 'model' }">
           Groundwater Model
         </v-tab>
